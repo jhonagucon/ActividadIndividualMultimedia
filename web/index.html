@@ -156,21 +156,9 @@
             <div class="legend-item"><span style="background:#303030"></span>Asfalto (S bajo, V bajo)</div>
           </div>
         </div>
-        <div class="code-preview">
-          <pre><code>hsv = cv2.cvtColor(imagen, cv2.COLOR_BGR2HSV)
-h, s, v = hsv[:,:,0], hsv[:,:,1], hsv[:,:,2]
-
-# Clasificacion por rangos de color
-m_cesped  = (h >= 35) &amp; (h &lt;= 85) &amp; (s >= 40)
-m_tierra  = (h >= 8)  &amp; (h &lt;= 30) &amp; (s >= 30)
-m_cemento = (s &lt; 30) &amp; (v >= 120)
-m_asfalto = (s &lt; 35) &amp; (v &lt; 120)
-
-# Crear mascara de segmentacion
-mascara[m_cesped]  = 0   # Verde
-mascara[m_tierra]  = 1   # Marron
-mascara[m_cemento] = 2   # Gris claro
-mascara[m_asfalto] = 3   # Gris oscuro</code></pre>
+        <div class="result-image-container">
+          <img src="resultado_texturas.jpg" alt="Resultado Clasificación de Texturas" class="result-img">
+          <div class="image-caption">Izquierda: Imagen original | Derecha: Clasificación de texturas a nivel de píxel</div>
         </div>
       </div>
     </div>
@@ -190,18 +178,9 @@ mascara[m_asfalto] = 3   # Gris oscuro</code></pre>
             <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
           </table>
         </div>
-        <div class="code-preview">
-          <pre><code>def filtro_promedio_manual(imagen):
-    alto, ancho, canales = imagen.shape
-    resultado = imagen.copy().astype(np.float32)
-
-    for y in range(1, alto - 1):
-        for x in range(1, ancho - 1):
-            for c in range(canales):
-                ventana = imagen[y-1:y+2, x-1:x+2, c]
-                resultado[y,x,c] = np.sum(ventana) / 9.0
-
-    return resultado.astype(np.uint8)</code></pre>
+        <div class="result-image-container">
+          <img src="resultado_suavizado.jpg" alt="Resultado Filtro Suavizado 3x3" class="result-img">
+          <div class="image-caption">Izquierda: Imagen con ruido de entrada | Derecha: Imagen suavizada de salida</div>
         </div>
       </div>
     </div>
