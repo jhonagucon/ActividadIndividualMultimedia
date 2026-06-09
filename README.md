@@ -17,8 +17,6 @@ ProyectoMultimedia/
 │   ├── index.html                    ← Plataforma web principal
 │   ├── style.css                     ← Estilos modernos (dark mode)
 │   └── app.js                        ← Three.js + formularios dinámicos
-├── examen/
-│   └── reconstruccion_3d.ipynb       ← Pipeline fotogramétrico
 ├── requirements.txt
 └── README.md
 ```
