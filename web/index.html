@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Multimedia I — Jonathan Gutierrez Condori</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="brand-icon">◈</span>
+    <span>Multimedia I · 2026</span>
+  </div>
+  <div class="nav-links">
+    <a href="#formularios" class="nav-link">Formularios</a>
+    <a href="#animacion3d" class="nav-link">Animación 3D</a>
+    <a href="#fotogrametria" class="nav-link">Fotogrametría</a>
+    <a href="#procesamiento" class="nav-link">Imágenes</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-label">Universidad Mayor de San Andrés · Informática</p>
+    <h1 class="hero-title">Proyecto Final<br><span class="gradient-text">Multimedia I</span></h1>
+    <p class="hero-sub">Jonathan Gutierrez Condori · 2026</p>
+    <div class="hero-chips">
+      <span class="chip">Python</span>
+      <span class="chip">OpenCV</span>
+      <span class="chip">Three.js</span>
+      <span class="chip">Fotogrametría</span>
+      <span class="chip">edge-tts</span>
+    </div>
+    <a href="#formularios" class="btn-hero">Explorar proyecto ↓</a>
+  </div>
+  <div class="hero-visual">
+    <canvas id="heroCanvas"></canvas>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN 1: FORMULARIOS DINÁMICOS ═════════════════════ -->
+<section id="formularios" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">01</span>
+      <h2>Formularios Dinámicos</h2>
+      <p>Sistema de trámites universitarios UMSA. El formulario carga sus campos desde un archivo JSON de flujo de procesos.</p>
+    </div>
+
+    <div class="form-controls">
+      <label>Seleccionar trámite:</label>
+      <div class="btn-group">
+        <button class="btn-tramite active" onclick="cargarFlujo('inscripcion')">📋 Inscripción de Materias</button>
+        <button class="btn-tramite" onclick="cargarFlujo('certificado')">📄 Certificado de Notas</button>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div class="form-info" id="formInfo"></div>
+      <form id="tramiteForm" class="tramite-form"></form>
+      <div class="form-steps" id="formSteps"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN 2: ANIMACIÓN 3D ══════════════════════════════ -->
+<section id="animacion3d" class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">02</span>
+      <h2>Animación 3D Interactiva</h2>
+      <p>Geometría procedural generada con Three.js. Arrastra para rotar, scroll para hacer zoom.</p>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="threeCanvas"></canvas>
+      <div class="canvas-hint">🖱 Arrastrar para rotar · Ctrl + Scroll para Zoom</div>
+      <div class="canvas-controls">
+        <button onclick="cambiarGeometria('esfera')">⬤ Esfera</button>
+        <button onclick="cambiarGeometria('toroide')">◎ Toroide</button>
+        <button onclick="cambiarGeometria('icosaedro')">⬡ Icosaedro</button>
+        <button onclick="toggleWireframe()">⬜ Wireframe</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN 3: MODELO FOTOGRAMÉTRICO ═════════════════════ -->
+<section id="fotogrametria" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">03</span>
+      <h2>Modelo Fotogramétrico</h2>
+      <p>Nube de puntos 3D generada a partir de 74 fotogramas extraídos del video del objeto.</p>
+    </div>
+    <div class="foto-grid">
+      <div class="canvas-wrapper">
+        <canvas id="objCanvas"></canvas>
+        <div class="canvas-badge">5,920 vértices · 74 fotogramas</div>
+        <div class="canvas-hint">🖱 Arrastrar para rotar · Ctrl + Scroll para Zoom</div>
+      </div>
+      <div class="foto-stats">
+        <h3>Estadísticas del Modelo</h3>
+        <div class="stat-row"><span>Video original</span><strong>28.6 seg · 867 frames</strong></div>
+        <div class="stat-row"><span>FPS del video</span><strong>30.3 FPS</strong></div>
+        <div class="stat-row"><span>Frames extraídos</span><strong>74 útiles</strong></div>
+        <div class="stat-row"><span>Frames descartados</span><strong>13 borrosos</strong></div>
+        <div class="stat-row"><span>Vértices 3D</span><strong>5,920</strong></div>
+        <div class="stat-row"><span>Formato</span><strong>OBJ (Wavefront)</strong></div>
+        <div class="stat-row"><span>Detección borrosidad</span><strong>Laplaciano &lt; 15</strong></div>
+        <div class="stat-row"><span>Tamaño del modelo</span><strong>303.7 KB</strong></div>
+        <div class="pipeline">
+          <h4>Pipeline de reconstrucción:</h4>
+          <div class="pipeline-step">📹 Captura de video</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step">🔍 Filtrado por Laplaciano</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step">🖼 74 fotogramas nítidos</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step">🔵 Nube de puntos 3D</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step">📦 Exportación OBJ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN 4: PROCESAMIENTO DE IMÁGENES ═════════════════ -->
+<section id="procesamiento" class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">04</span>
+      <h2>Procesamiento de Imágenes</h2>
+      <p>Algoritmos implementados a nivel de píxel: clasificación de texturas y filtro de suavizado 3×3.</p>
+    </div>
+    <div class="proc-tabs">
+      <button class="tab-btn active" onclick="mostrarTab('texturas')">Clasificación de Texturas</button>
+      <button class="tab-btn" onclick="mostrarTab('suavizado')">Filtro Suavizado 3×3</button>
+    </div>
+    <div id="tab-texturas" class="tab-content active">
+      <div class="algo-card">
+        <div class="algo-desc">
+          <h3>Clasificación por Color y Textura</h3>
+          <p>Cada píxel se analiza en espacio HSV. La varianza local en una ventana 5×5 calcula la rugosidad de la superficie. Se clasifica en 4 categorías:</p>
+          <div class="legend">
+            <div class="legend-item"><span style="background:#22B422"></span>Césped (H: 35–85°, S alto)</div>
+            <div class="legend-item"><span style="background:#5A3A1A"></span>Tierra (H: 8–30°, S medio)</div>
+            <div class="legend-item"><span style="background:#A8A8A8"></span>Cemento (S bajo, V alto)</div>
+            <div class="legend-item"><span style="background:#303030"></span>Asfalto (S bajo, V bajo)</div>
+          </div>
+        </div>
+        <div class="code-preview">
+          <pre><code>hsv = cv2.cvtColor(imagen, cv2.COLOR_BGR2HSV)
+h, s, v = hsv[:,:,0], hsv[:,:,1], hsv[:,:,2]
+
+# Clasificacion por rangos de color
+m_cesped  = (h >= 35) &amp; (h &lt;= 85) &amp; (s >= 40)
+m_tierra  = (h >= 8)  &amp; (h &lt;= 30) &amp; (s >= 30)
+m_cemento = (s &lt; 30) &amp; (v >= 120)
+m_asfalto = (s &lt; 35) &amp; (v &lt; 120)
+
+# Crear mascara de segmentacion
+mascara[m_cesped]  = 0   # Verde
+mascara[m_tierra]  = 1   # Marron
+mascara[m_cemento] = 2   # Gris claro
+mascara[m_asfalto] = 3   # Gris oscuro</code></pre>
+        </div>
+      </div>
+    </div>
+    <div id="tab-suavizado" class="tab-content">
+      <div class="algo-card">
+        <div class="algo-desc">
+          <h3>Filtro de Promedio 3×3 Manual</h3>
+          <p>Para cada píxel (excluyendo bordes), se calcula el promedio aritmético de los 9 píxeles en la ventana 3×3. Reduce el ruido gaussiano sin usar funciones de OpenCV.</p>
+          <div class="formula-box">
+            <strong>Fórmula:</strong><br>
+            P'(x,y) = Σ P(x+i, y+j) / 9<br>
+            donde i,j ∈ {-1, 0, 1}
+          </div>
+          <table class="kernel-table">
+            <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
+            <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
+            <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
+          </table>
+        </div>
+        <div class="code-preview">
+          <pre><code>def filtro_promedio_manual(imagen):
+    alto, ancho, canales = imagen.shape
+    resultado = imagen.copy().astype(np.float32)
+
+    for y in range(1, alto - 1):
+        for x in range(1, ancho - 1):
+            for c in range(canales):
+                ventana = imagen[y-1:y+2, x-1:x+2, c]
+                resultado[y,x,c] = np.sum(ventana) / 9.0
+
+    return resultado.astype(np.uint8)</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <p><strong>Jonathan Gutierrez Condori</strong> · Multimedia I · UMSA 2026</p>
+    <p>Tecnologías: Python · OpenCV · Three.js · edge-tts · FFmpeg · GitHub Pages</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
