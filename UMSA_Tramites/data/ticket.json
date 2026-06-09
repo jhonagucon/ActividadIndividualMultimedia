@@ -1,0 +1,404 @@
+[
+    {
+        "ticket": 1,
+        "flujo": "inscripcion",
+        "proceso": "P1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20210345",
+            "nombre_est": "María Fernanda López",
+            "carrera": "Ingeniería de Sistemas",
+            "semestre": "5",
+            "materias": "INF-111,MAT-101,SIS-301",
+            "observaciones_est": "Por favor revisar disponibilidad de horarios"
+        },
+        "fechainicial": "2026-06-01 08:15:00",
+        "fechafinal": "2026-06-01 08:42:00"
+    },
+    {
+        "ticket": 1,
+        "flujo": "inscripcion",
+        "proceso": "P2",
+        "usuario": "asesor",
+        "datos": {
+            "ru": "20210345",
+            "nombre_est": "María Fernanda López",
+            "carrera": "Ingeniería de Sistemas",
+            "semestre": "5",
+            "materias": "INF-111,MAT-101,SIS-301",
+            "observaciones_est": "Por favor revisar disponibilidad de horarios",
+            "decision_asesor": "Aprobado"
+        },
+        "fechainicial": "2026-06-01 09:00:00",
+        "fechafinal": "2026-06-01 09:25:00"
+    },
+    {
+        "ticket": 1,
+        "flujo": "inscripcion",
+        "proceso": "P3",
+        "usuario": "kardex",
+        "datos": {
+            "ru": "20210345",
+            "nombre_est": "María Fernanda López",
+            "carrera": "Ingeniería de Sistemas",
+            "semestre": "5",
+            "materias": "INF-111,MAT-101,SIS-301",
+            "decision_asesor": "Aprobado",
+            "nro_registro_kardex": "KDX-2026-001",
+            "fecha_registro": "2026-06-01"
+        },
+        "fechainicial": "2026-06-01 10:00:00",
+        "fechafinal": "2026-06-01 10:15:00"
+    },
+    {
+        "ticket": 1,
+        "flujo": "inscripcion",
+        "proceso": "P4",
+        "usuario": "asesor",
+        "datos": {
+            "ru": "20210345",
+            "nombre_est": "María Fernanda López",
+            "carrera": "Ingeniería de Sistemas",
+            "semestre": "5",
+            "materias": "INF-111,MAT-101,SIS-301",
+            "nro_registro_kardex": "KDX-2026-001",
+            "mensaje_notificacion": "Estimada María Fernanda, tu inscripción fue aprobada y registrada exitosamente."
+        },
+        "fechainicial": "2026-06-01 11:00:00",
+        "fechafinal": "2026-06-01 11:10:00"
+    },
+    {
+        "ticket": 2,
+        "flujo": "inscripcion",
+        "proceso": "P1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20190872",
+            "nombre_est": "Carlos Eduardo Mamani",
+            "carrera": "Informática",
+            "semestre": "7",
+            "materias": "INF-272,ETN-201,RED-401",
+            "observaciones_est": ""
+        },
+        "fechainicial": "2026-06-02 07:30:00",
+        "fechafinal": "2026-06-02 07:55:00"
+    },
+    {
+        "ticket": 2,
+        "flujo": "inscripcion",
+        "proceso": "P2",
+        "usuario": "asesor",
+        "datos": {
+            "ru": "20190872",
+            "nombre_est": "Carlos Eduardo Mamani",
+            "carrera": "Informática",
+            "semestre": "7",
+            "materias": "INF-272,ETN-201,RED-401",
+            "observaciones_est": ""
+        },
+        "fechainicial": "2026-06-02 08:00:00",
+        "fechafinal": null
+    },
+    {
+        "ticket": 3,
+        "flujo": "inscripcion",
+        "proceso": "P1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20220156",
+            "nombre_est": "Ana Beatriz Quispe",
+            "carrera": "Telecomunicaciones",
+            "semestre": "3",
+            "materias": "MAT-101,ETN-201",
+            "observaciones_est": "Primera inscripción en la carrera"
+        },
+        "fechainicial": "2026-06-01 14:00:00",
+        "fechafinal": "2026-06-01 14:20:00"
+    },
+    {
+        "ticket": 3,
+        "flujo": "inscripcion",
+        "proceso": "P2",
+        "usuario": "asesor",
+        "datos": {
+            "ru": "20220156",
+            "nombre_est": "Ana Beatriz Quispe",
+            "carrera": "Telecomunicaciones",
+            "semestre": "3",
+            "materias": "MAT-101,ETN-201",
+            "decision_asesor": "Aprobado"
+        },
+        "fechainicial": "2026-06-01 15:00:00",
+        "fechafinal": "2026-06-01 15:18:00"
+    },
+    {
+        "ticket": 3,
+        "flujo": "inscripcion",
+        "proceso": "P3",
+        "usuario": "kardex",
+        "datos": {
+            "ru": "20220156",
+            "nombre_est": "Ana Beatriz Quispe",
+            "carrera": "Telecomunicaciones",
+            "semestre": "3",
+            "materias": "MAT-101,ETN-201",
+            "decision_asesor": "Aprobado"
+        },
+        "fechainicial": "2026-06-01 16:00:00",
+        "fechafinal": null
+    },
+    {
+        "ticket": 4,
+        "flujo": "inscripcion",
+        "proceso": "P1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20230041",
+            "nombre_est": "José Rodrigo Flores",
+            "carrera": "Ingeniería Industrial",
+            "semestre": "2",
+            "materias": "MAT-101,IND-112,ETN-201",
+            "observaciones_est": ""
+        },
+        "fechainicial": "2026-05-31 09:00:00",
+        "fechafinal": "2026-05-31 09:30:00"
+    },
+    {
+        "ticket": 4,
+        "flujo": "inscripcion",
+        "proceso": "P2",
+        "usuario": "asesor",
+        "datos": {
+            "ru": "20230041",
+            "nombre_est": "José Rodrigo Flores",
+            "carrera": "Ingeniería Industrial",
+            "semestre": "2",
+            "materias": "MAT-101,IND-112,ETN-201"
+        },
+        "fechainicial": "2026-05-31 10:00:00",
+        "fechafinal": "2026-05-31 10:20:00"
+    },
+    {
+        "ticket": 4,
+        "flujo": "inscripcion",
+        "proceso": "P5",
+        "usuario": "asesor",
+        "datos": {
+            "ru": "20230041",
+            "nombre_est": "José Rodrigo Flores",
+            "carrera": "Ingeniería Industrial",
+            "semestre": "2",
+            "materias": "MAT-101,IND-112,ETN-201",
+            "motivo_devolucion": "El estudiante no cumple los prerequisitos para IND-112. Debe cursar MAT-101 primero.",
+            "observaciones_devolucion": "Corrija las materias seleccionadas y vuelva a enviar."
+        },
+        "fechainicial": "2026-05-31 10:20:00",
+        "fechafinal": "2026-05-31 10:35:00"
+    },
+    {
+        "ticket": 4,
+        "flujo": "inscripcion",
+        "proceso": "P1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20230041",
+            "nombre_est": "José Rodrigo Flores",
+            "carrera": "Ingeniería Industrial",
+            "semestre": "2",
+            "materias": "MAT-101,IND-112,ETN-201",
+            "motivo_devolucion": "El estudiante no cumple los prerequisitos para IND-112.",
+            "observaciones_devolucion": "Corrija las materias seleccionadas y vuelva a enviar."
+        },
+        "fechainicial": "2026-05-31 11:00:00",
+        "fechafinal": null
+    },
+    {
+        "ticket": 5,
+        "flujo": "certificado",
+        "proceso": "C1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20180234",
+            "nombre_est": "Laura Patricia Apaza",
+            "carrera": "Ingeniería Química",
+            "tipo_cert": "Certificado de Estudios",
+            "motivo": "Visa de estudiante de intercambio a Brasil",
+            "copias": "2",
+            "observaciones_est": "Urgente, el trámite de visa vence el 15 de junio"
+        },
+        "fechainicial": "2026-06-02 06:45:00",
+        "fechafinal": "2026-06-02 07:10:00"
+    },
+    {
+        "ticket": 5,
+        "flujo": "certificado",
+        "proceso": "C2",
+        "usuario": "secretaria",
+        "datos": {
+            "ru": "20180234",
+            "nombre_est": "Laura Patricia Apaza",
+            "carrera": "Ingeniería Química",
+            "tipo_cert": "Certificado de Estudios",
+            "motivo": "Visa de estudiante de intercambio a Brasil",
+            "copias": "2",
+            "observaciones_est": "Urgente, el trámite de visa vence el 15 de junio"
+        },
+        "fechainicial": "2026-06-02 08:00:00",
+        "fechafinal": null
+    },
+    {
+        "ticket": 6,
+        "flujo": "certificado",
+        "proceso": "C1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20170089",
+            "nombre_est": "Grover Abelino Mamani",
+            "carrera": "Informática",
+            "tipo_cert": "Certificado de Egreso",
+            "motivo": "Trámite de título en provisión nacional",
+            "copias": "3",
+            "observaciones_est": ""
+        },
+        "fechainicial": "2026-06-01 10:00:00",
+        "fechafinal": "2026-06-01 10:25:00"
+    },
+    {
+        "ticket": 6,
+        "flujo": "certificado",
+        "proceso": "C2",
+        "usuario": "secretaria",
+        "datos": {
+            "ru": "20170089",
+            "nombre_est": "Grover Abelino Mamani",
+            "carrera": "Informática",
+            "tipo_cert": "Certificado de Egreso",
+            "motivo": "Trámite de título en provisión nacional",
+            "copias": "3",
+            "decision_secretaria": "Aprobado por secretaría"
+        },
+        "fechainicial": "2026-06-01 11:00:00",
+        "fechafinal": "2026-06-01 11:20:00"
+    },
+    {
+        "ticket": 6,
+        "flujo": "certificado",
+        "proceso": "C3",
+        "usuario": "decano",
+        "datos": {
+            "ru": "20170089",
+            "nombre_est": "Grover Abelino Mamani",
+            "carrera": "Informática",
+            "tipo_cert": "Certificado de Egreso",
+            "motivo": "Trámite de título en provisión nacional",
+            "copias": "3",
+            "decision_secretaria": "Aprobado por secretaría"
+        },
+        "fechainicial": "2026-06-01 14:00:00",
+        "fechafinal": null
+    },
+    {
+        "ticket": 7,
+        "flujo": "certificado",
+        "proceso": "C1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20200567",
+            "nombre_est": "Pedro Antonio Condori",
+            "carrera": "Ingeniería Civil",
+            "tipo_cert": "Carta de Presentación",
+            "motivo": "Pasantía en empresa constructora COBOCE",
+            "copias": "1",
+            "observaciones_est": ""
+        },
+        "fechainicial": "2026-05-30 09:00:00",
+        "fechafinal": "2026-05-30 09:20:00"
+    },
+    {
+        "ticket": 7,
+        "flujo": "certificado",
+        "proceso": "C2",
+        "usuario": "secretaria",
+        "datos": {
+            "ru": "20200567",
+            "nombre_est": "Pedro Antonio Condori",
+            "carrera": "Ingeniería Civil",
+            "tipo_cert": "Carta de Presentación",
+            "motivo": "Pasantía en empresa constructora COBOCE",
+            "copias": "1",
+            "decision_secretaria": "Aprobado por secretaría"
+        },
+        "fechainicial": "2026-05-30 10:00:00",
+        "fechafinal": "2026-05-30 10:30:00"
+    },
+    {
+        "ticket": 7,
+        "flujo": "certificado",
+        "proceso": "C3",
+        "usuario": "decano",
+        "datos": {
+            "ru": "20200567",
+            "nombre_est": "Pedro Antonio Condori",
+            "carrera": "Ingeniería Civil",
+            "tipo_cert": "Carta de Presentación",
+            "motivo": "Pasantía en empresa constructora COBOCE",
+            "copias": "1",
+            "decision_secretaria": "Aprobado por secretaría",
+            "nro_certificado": "CERT-2026-001",
+            "observaciones_decano": "Firmado y sellado el 30/05/2026"
+        },
+        "fechainicial": "2026-05-30 14:00:00",
+        "fechafinal": "2026-05-30 14:45:00"
+    },
+    {
+        "ticket": 8,
+        "flujo": "certificado",
+        "proceso": "C1",
+        "usuario": "estudiante",
+        "datos": {
+            "ru": "20211203",
+            "nombre_est": "Sandra Viviana Choque",
+            "carrera": "Ingeniería de Sistemas",
+            "tipo_cert": "Certificado de Notas",
+            "motivo": "Postulación a beca SENACYT",
+            "copias": "1",
+            "observaciones_est": "Necesito las notas de todos los semestres cursados"
+        },
+        "fechainicial": "2026-06-02 11:00:00",
+        "fechafinal": "2026-06-02 11:18:00"
+    },
+    {
+        "ticket": 8,
+        "flujo": "certificado",
+        "proceso": "C2",
+        "usuario": "secretaria",
+        "datos": {
+            "ru": "20211203",
+            "nombre_est": "Sandra Viviana Choque",
+            "carrera": "Ingeniería de Sistemas",
+            "tipo_cert": "Certificado de Notas",
+            "motivo": "Postulación a beca SENACYT",
+            "copias": "1",
+            "motivo_rechazo": "El estudiante tiene materias pendientes de regularización. No puede emitirse certificado de notas completo."
+        },
+        "fechainicial": "2026-06-02 12:00:00",
+        "fechafinal": "2026-06-02 12:22:00"
+    },
+    {
+        "ticket": 8,
+        "flujo": "certificado",
+        "proceso": "C4",
+        "usuario": "secretaria",
+        "datos": {
+            "ru": "20211203",
+            "nombre_est": "Sandra Viviana Choque",
+            "carrera": "Ingeniería de Sistemas",
+            "tipo_cert": "Certificado de Notas",
+            "motivo": "Postulación a beca SENACYT",
+            "motivo_rechazo": "El estudiante tiene materias pendientes de regularización.",
+            "comunicado_rechazo": "Estimada Sandra, su solicitud fue rechazada. Regularice sus materias pendientes y vuelva a solicitar."
+        },
+        "fechainicial": "2026-06-02 12:22:00",
+        "fechafinal": null
+    }
+]

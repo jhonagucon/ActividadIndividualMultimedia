@@ -9,12 +9,13 @@ Repositorio del proyecto final de la materia **Multimedia I**, que incluye proce
 
 ```
 ProyectoMultimedia/
+├── UMSA_Tramites/                    ← Sistema gestor de trámites (Backend PHP)
 ├── procesamiento/
 │   ├── a_clasificacion_texturas.py   ← Clasificar superficies por color/textura
 │   ├── b_filtro_suavizado.py         ← Filtro de promedio 3×3 manual (píxel a píxel)
 │   └── c_vaca_lola_animacion.py      ← Cover multimedia "La Vaca Lola"
 ├── web/
-│   ├── index.html                    ← Plataforma web principal
+│   ├── index.html                    ← Plataforma web principal (GitHub Pages)
 │   ├── style.css                     ← Estilos modernos (dark mode)
 │   └── app.js                        ← Three.js + formularios dinámicos
 ├── requirements.txt
@@ -69,6 +70,12 @@ start web/index.html
 
 # O simplemente doble clic en web/index.html
 ```
+
+### Gestor de Trámites (Backend PHP)
+Para ejecutar el gestor de trámites completo con backend en PHP:
+1. Copia la carpeta `UMSA_Tramites` al directorio raíz de tu servidor local (ej. `C:/xampp/htdocs/UMSA_Tramites`).
+2. Inicia el servidor Apache desde el panel de XAMPP.
+3. Abre en tu navegador la dirección `http://localhost/UMSA_Tramites/index.php`.
 
 ---
 

@@ -1,0 +1,41 @@
+{
+    "flujo": "certificado",
+    "nombre": "Emisión de Certificados",
+    "procesos": [
+        {
+            "id": "C1",
+            "nombre": "Solicitar certificado",
+            "pantalla": "solicitar_certificado",
+            "rol": "estudiante",
+            "siguiente": "C2"
+        },
+        {
+            "id": "C2",
+            "nombre": "Revisar solicitud",
+            "pantalla": "revisar_solicitud",
+            "rol": "secretaria",
+            "siguiente": null
+        },
+        {
+            "id": "C3",
+            "nombre": "Emitir certificado",
+            "pantalla": "emitir_certificado",
+            "rol": "decano",
+            "siguiente": null
+        },
+        {
+            "id": "C4",
+            "nombre": "Rechazar con motivo",
+            "pantalla": "rechazar_certificado",
+            "rol": "secretaria",
+            "siguiente": null
+        }
+    ],
+    "condiciones": [
+        {
+            "proceso": "C2",
+            "verdad": "C3",
+            "falso": "C4"
+        }
+    ]
+}

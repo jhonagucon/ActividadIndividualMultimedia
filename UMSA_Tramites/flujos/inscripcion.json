@@ -1,0 +1,48 @@
+{
+    "flujo": "inscripcion",
+    "nombre": "Inscripción de Materias",
+    "procesos": [
+        {
+            "id": "P1",
+            "nombre": "Completar formulario de inscripción",
+            "pantalla": "formulario_inscripcion",
+            "rol": "estudiante",
+            "siguiente": "P2"
+        },
+        {
+            "id": "P2",
+            "nombre": "Revisar y aprobar materias",
+            "pantalla": "revisar_inscripcion",
+            "rol": "asesor",
+            "siguiente": null
+        },
+        {
+            "id": "P3",
+            "nombre": "Registrar en Kardex",
+            "pantalla": "registrar_kardex",
+            "rol": "kardex",
+            "siguiente": "P4"
+        },
+        {
+            "id": "P4",
+            "nombre": "Notificar al estudiante",
+            "pantalla": "notificar",
+            "rol": "asesor",
+            "siguiente": null
+        },
+        {
+            "id": "P5",
+            "nombre": "Devolver con observaciones",
+            "pantalla": "devolver_observaciones",
+            "rol": "asesor",
+            "siguiente": "P1"
+        }
+    ],
+    "condiciones": [
+        {
+            "proceso": "P2",
+            "verdad": "P3",
+            "falso": "P5"
+        }
+    ]
+}
