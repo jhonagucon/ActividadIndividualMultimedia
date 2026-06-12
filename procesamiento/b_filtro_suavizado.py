@@ -76,10 +76,9 @@ def agregar_etiqueta(img, texto):
     cv2.putText(copia, texto, (8, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255), 2)
     return copia
 
-col1 = agregar_etiqueta(imagen_con_ruido, "CON RUIDO")
-col2 = agregar_etiqueta(suavizada_manual, "FILTRO 3x3 MANUAL")
-col3 = agregar_etiqueta(suavizada_cv2,    "cv2.blur (referencia)")
+col1 = agregar_etiqueta(imagen_con_ruido, "ORIGINAL (CON RUIDO)")
+col2 = agregar_etiqueta(suavizada_manual, "SUAVIZADO MANUAL 3x3")
 
-comparativa = np.hstack([col1, sep, col2, sep, col3])
+comparativa = np.hstack([col1, sep, col2])
 cv2.imwrite("resultado_suavizado.jpg", comparativa)
 print("\nGuardado: resultado_suavizado.jpg")
