@@ -2,7 +2,7 @@
    app.js — Proyecto Multimedia I · Jonathan Gutierrez Condori
    Three.js: Hero, Animación 3D, Visor Fotogramétrico
    Formularios dinámicos desde JSON
-═══════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════ */
 
 // ══════════════════════════════════════════════════════════
 // FLUJOS JSON (inline para evitar CORS en file://)
@@ -112,61 +112,100 @@ function cargarFlujo(nombre) {
         <span style="color:#94a3b8">${p.id}</span>
         ${p.nombre}
         <span class="step-role">[${p.rol}]</span>
-        ${i < flujo.procesos.length - 1 ? '<span style="color:#3b82f6">→</span>' : ''}
+        ${i < flujo.procesos.length - 1 ? '<span style="color:#6366f1">→</span>' : ''}
       </div>
     `).join('')}
   </div>`;
 }
 
 // ══════════════════════════════════════════════════════════
-// THREE.JS — HERO CANVAS (partículas flotantes)
+// TEXTURA DE PARTÍCULA CIRCULAR GLOWING (Elimina cuadrados feos)
+// ══════════════════════════════════════════════════════════
+function createCircleTexture(colorStr = '#ffffff', size = 64) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  
+  // Gradiente radial para difuminar bordes y dar efecto de luz suave
+  const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  grad.addColorStop(0, colorStr);
+  grad.addColorStop(0.25, colorStr);
+  grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.2)');
+  grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+  ctx.fill();
+  
+  return new THREE.CanvasTexture(canvas);
+}
+
+// ══════════════════════════════════════════════════════════
+// THREE.JS — HERO CANVAS (partículas flotantes de alta calidad)
 // ══════════════════════════════════════════════════════════
 (function initHero() {
   const canvas = document.getElementById('heroCanvas');
   if (!canvas || typeof THREE === 'undefined') return;
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   const w = canvas.clientWidth || 500, h = canvas.clientHeight || 420;
   renderer.setSize(w, h, false);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
   camera.position.z = 5;
 
-  // Nube de partículas
+  // Nube de partículas circulares suaves
   const geo = new THREE.BufferGeometry();
   const N = 800;
   const pos = new Float32Array(N * 3);
   const col = new Float32Array(N * 3);
   for (let i = 0; i < N; i++) {
-    pos[i*3]   = (Math.random()-0.5)*10;
-    pos[i*3+1] = (Math.random()-0.5)*8;
-    pos[i*3+2] = (Math.random()-0.5)*5;
+    pos[i*3]   = (Math.random()-0.5)*12;
+    pos[i*3+1] = (Math.random()-0.5)*9;
+    pos[i*3+2] = (Math.random()-0.5)*6;
     const t = Math.random();
-    col[i*3]   = 0.23 + t*0.3;
-    col[i*3+1] = 0.51 + t*0.2;
-    col[i*3+2] = 0.96;
+    col[i*3]   = 0.38 + t*0.2; // R
+    col[i*3+1] = 0.4  + t*0.3; // G (mezcla de indigo a cian)
+    col[i*3+2] = 0.95;         // B
   }
   geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
   geo.setAttribute('color',    new THREE.BufferAttribute(col,3));
-  const mat = new THREE.PointsMaterial({ size: 0.06, vertexColors: true, transparent: true, opacity: 0.7 });
+  
+  const circleTexture = createCircleTexture('#ffffff', 64);
+  const mat = new THREE.PointsMaterial({ 
+    size: 0.12, 
+    vertexColors: true, 
+    map: circleTexture,
+    transparent: true, 
+    opacity: 0.75,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
   scene.add(new THREE.Points(geo, mat));
 
-  // Anillo decorativo
-  const ringGeo = new THREE.TorusGeometry(2, 0.02, 8, 80);
-  const ringMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.3 });
+  // Anillo decorativo futurista
+  const ringGeo = new THREE.TorusGeometry(2.2, 0.03, 16, 100);
+  const ringMat = new THREE.MeshBasicMaterial({ 
+    color: 0x06b6d4, 
+    transparent: true, 
+    opacity: 0.45,
+    wireframe: true 
+  });
   const ring = new THREE.Mesh(ringGeo, ringMat);
-  ring.rotation.x = 0.5;
+  ring.rotation.x = 0.6;
   scene.add(ring);
 
   let t = 0;
   (function animate() {
     requestAnimationFrame(animate);
-    t += 0.005;
-    ring.rotation.z = t * 0.3;
-    ring.rotation.y = t * 0.1;
+    t += 0.004;
+    ring.rotation.z = t * 0.2;
+    ring.rotation.y = t * 0.08;
     const positions = geo.attributes.position.array;
     for (let i = 0; i < N; i++) {
-      positions[i*3+1] += Math.sin(t + i*0.1) * 0.0005;
+      positions[i*3+1] += Math.sin(t + i*0.08) * 0.0006;
     }
     geo.attributes.position.needsUpdate = true;
     renderer.render(scene, camera);
@@ -174,61 +213,90 @@ function cargarFlujo(nombre) {
 })();
 
 // ══════════════════════════════════════════════════════════
-// THREE.JS — ANIMACIÓN 3D INTERACTIVA
+// THREE.JS — ANIMACIÓN 3D INTERACTIVA (Upgrade Materiales y Luces)
 // ══════════════════════════════════════════════════════════
 let threeScene, threeCamera, threeRenderer, meshPrincipal, isWireframe = false;
+let orbitLight; // Luz en órbita para reflejos dinámicos
 
 (function initThree() {
   const canvas = document.getElementById('threeCanvas');
   if (!canvas || typeof THREE === 'undefined') return;
   threeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  threeRenderer.setPixelRatio(devicePixelRatio);
-  threeRenderer.setClearColor(0x060b14);
-  const w = canvas.clientWidth || 700, h = 480;
+  threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  threeRenderer.setClearColor(0x03050b);
+  const w = canvas.clientWidth || 700, h = 520;
   threeRenderer.setSize(w, h, false);
 
   threeScene  = new THREE.Scene();
   threeCamera = new THREE.PerspectiveCamera(50, w/h, 0.1, 100);
-  threeCamera.position.set(0, 0, 4);
+  threeCamera.position.set(0, 0, 4.2);
 
-  // Luces
-  threeScene.add(new THREE.AmbientLight(0x334466, 1));
-  const dirLight = new THREE.DirectionalLight(0x3b82f6, 2);
-  dirLight.position.set(3,3,3);
+  // Luces premium
+  threeScene.add(new THREE.AmbientLight(0x131930, 2.0));
+  
+  const dirLight = new THREE.DirectionalLight(0x06b6d4, 3.5); // Luz cian
+  dirLight.position.set(4, 4, 4);
   threeScene.add(dirLight);
-  const fillLight = new THREE.DirectionalLight(0x8b5cf6, 1);
-  fillLight.position.set(-3,-1,-2);
+  
+  const fillLight = new THREE.DirectionalLight(0x6366f1, 2.5); // Luz índigo
+  fillLight.position.set(-4, -2, -3);
   threeScene.add(fillLight);
 
-  // Geometría inicial
-  const geo = new THREE.SphereGeometry(1.2, 64, 64);
-  const mat = new THREE.MeshPhongMaterial({
-    color: 0x3b82f6, specular: 0x8b5cf6, shininess: 80,
-    transparent: true, opacity: 0.9
+  // Luz puntual giratoria de color rosa caliente para crear reflejos especulares de ensueño
+  orbitLight = new THREE.PointLight(0xec4899, 4, 12);
+  threeScene.add(orbitLight);
+
+  // Geometría y material avanzado MeshPhysicalMaterial (Transparencia, brillo, laca clara)
+  const geo = new THREE.SphereGeometry(1.25, 64, 64);
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: 0x6366f1,
+    roughness: 0.12,
+    metalness: 0.85,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.05,
+    reflectivity: 1.0,
+    transparent: true,
+    opacity: 0.92,
+    flatShading: false
   });
   meshPrincipal = new THREE.Mesh(geo, mat);
   threeScene.add(meshPrincipal);
 
-  // Grid de fondo
-  const grid = new THREE.GridHelper(20, 30, 0x1a2235, 0x1a2235);
-  grid.position.y = -2;
+  // Grid de fondo estilizado
+  const grid = new THREE.GridHelper(20, 30, 0x1e293b, 0x1e293b);
+  grid.position.y = -2.1;
   threeScene.add(grid);
 
-  // Partículas de fondo
+  // Partículas flotantes de fondo
   const pgeo = new THREE.BufferGeometry();
-  const pp = new Float32Array(600*3);
-  for (let i=0;i<600;i++){pp[i*3]=(Math.random()-0.5)*20;pp[i*3+1]=(Math.random()-0.5)*20;pp[i*3+2]=(Math.random()-0.5)*20;}
+  const pp = new Float32Array(500*3);
+  for (let i=0;i<500;i++){
+    pp[i*3]=(Math.random()-0.5)*20;
+    pp[i*3+1]=(Math.random()-0.5)*20;
+    pp[i*3+2]=(Math.random()-0.5)*20;
+  }
   pgeo.setAttribute('position', new THREE.BufferAttribute(pp,3));
-  threeScene.add(new THREE.Points(pgeo, new THREE.PointsMaterial({size:0.04,color:0x3b82f6,transparent:true,opacity:0.4})));
+  
+  const starTexture = createCircleTexture('#06b6d4', 64);
+  const pointsMat = new THREE.PointsMaterial({
+    size: 0.15,
+    color: 0x06b6d4,
+    map: starTexture,
+    transparent: true,
+    opacity: 0.45,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
+  threeScene.add(new THREE.Points(pgeo, pointsMat));
 
-  // Controles de órbita manual (mouse drag)
+  // Controles de órbita manual
   let isDragging=false, prevX=0, prevY=0, rotX=0, rotY=0;
   canvas.addEventListener('mousedown',e=>{isDragging=true;prevX=e.clientX;prevY=e.clientY;});
   window.addEventListener('mouseup',()=>isDragging=false);
   window.addEventListener('mousemove',e=>{
     if(!isDragging)return;
-    rotY+=(e.clientX-prevX)*0.008;
-    rotX+=(e.clientY-prevY)*0.008;
+    rotY+=(e.clientX-prevX)*0.007;
+    rotX+=(e.clientY-prevY)*0.007;
     prevX=e.clientX;prevY=e.clientY;
   });
   canvas.addEventListener('wheel',e=>{
@@ -241,10 +309,18 @@ let threeScene, threeCamera, threeRenderer, meshPrincipal, isWireframe = false;
   let t=0;
   (function animate(){
     requestAnimationFrame(animate);
-    t+=0.012;
-    meshPrincipal.rotation.y = rotY + t*0.4;
-    meshPrincipal.rotation.x = rotX + Math.sin(t*0.3)*0.1;
-    meshPrincipal.position.y = Math.sin(t*0.8)*0.15;
+    t+=0.01;
+    meshPrincipal.rotation.y = rotY + t*0.35;
+    meshPrincipal.rotation.x = rotX + Math.sin(t*0.25)*0.08;
+    meshPrincipal.position.y = Math.sin(t*0.75)*0.12;
+    
+    // Mover la luz de órbita en círculo tridimensional
+    if (orbitLight) {
+      orbitLight.position.x = Math.cos(t * 1.5) * 2.8;
+      orbitLight.position.z = Math.sin(t * 1.5) * 2.8;
+      orbitLight.position.y = Math.sin(t * 0.7) * 1.5;
+    }
+    
     threeRenderer.render(threeScene,threeCamera);
   })();
 })();
@@ -253,9 +329,9 @@ function cambiarGeometria(tipo) {
   if (!threeScene || !meshPrincipal) return;
   threeScene.remove(meshPrincipal);
   let geo;
-  if (tipo==='esfera')    geo = new THREE.SphereGeometry(1.2,64,64);
-  else if(tipo==='toroide') geo = new THREE.TorusGeometry(1,0.45,32,100);
-  else                    geo = new THREE.IcosahedronGeometry(1.3,1);
+  if (tipo==='esfera')    geo = new THREE.SphereGeometry(1.25,64,64);
+  else if(tipo==='toroide') geo = new THREE.TorusGeometry(1.05,0.42,32,100);
+  else                    geo = new THREE.IcosahedronGeometry(1.35,1);
   meshPrincipal = new THREE.Mesh(geo, meshPrincipal.material);
   threeScene.add(meshPrincipal);
 }
@@ -267,29 +343,44 @@ function toggleWireframe() {
 }
 
 // ══════════════════════════════════════════════════════════
-// THREE.JS — VISOR FOTOGRAMÉTRICO (nube de puntos OBJ)
+// THREE.JS — VISOR FOTOGRAMÉTRICO (Nube de Puntos Holográfica Glow)
 // ══════════════════════════════════════════════════════════
 (function initObjViewer() {
   const canvas = document.getElementById('objCanvas');
   if (!canvas || typeof THREE === 'undefined') return;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  renderer.setPixelRatio(devicePixelRatio);
-  renderer.setClearColor(0x060b14);
-  const w = canvas.clientWidth || 500, h = 480;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x03050b);
+  const w = canvas.clientWidth || 500, h = 520;
   renderer.setSize(w, h, false);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, w/h, 0.01, 100);
   camera.position.set(0, 0, 3.5);
 
-  // Eje de referencia
-  scene.add(new THREE.AxesHelper(0.5));
+  // Ejes 3D de referencia
+  const axes = new THREE.AxesHelper(0.6);
+  axes.material.opacity = 0.35;
+  axes.material.transparent = true;
+  scene.add(axes);
 
-  // Luces tenues
-  scene.add(new THREE.AmbientLight(0x334466, 2));
+  // Luces de ambientación
+  scene.add(new THREE.AmbientLight(0x131930, 2.5));
 
-  // Inicializar objeto de puntos vacío
+  // Inicializar geometría y material de partículas circulares suaves (Holograma Glow)
   const geo = new THREE.BufferGeometry();
-  const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.025, vertexColors: true }));
+  
+  const particleTexture = createCircleTexture('#ffffff', 64);
+  const pointsMaterial = new THREE.PointsMaterial({ 
+    size: 0.045, // Tamaño perfecto de partícula
+    vertexColors: true,
+    map: particleTexture,
+    transparent: true,
+    alphaTest: 0.001,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending // Glow holográfico en aditivo
+  });
+  
+  const pts = new THREE.Points(geo, pointsMaterial);
   scene.add(pts);
 
   // Cargar modelo real (con fallback a simulación por CORS en file://)
@@ -311,7 +402,7 @@ function toggleWireframe() {
             if (parts.length >= 7) {
               colArray.push(parseFloat(parts[4]), parseFloat(parts[5]), parseFloat(parts[6]));
             } else {
-              colArray.push(0.7, 0.6, 0.5); // Color default
+              colArray.push(0.06, 0.71, 0.83); // Color cian por defecto
             }
           }
         }
@@ -332,7 +423,7 @@ function toggleWireframe() {
     })
     .catch(err => {
       console.warn('Usando fallback de simulación de nube de puntos:', err.message);
-      // Simular nube de puntos igual a la real
+      // Simular nube de puntos igual a la real pero con colores premium (cian/rosa)
       const N = 5920;
       const positions = new Float32Array(N*3);
       const colors    = new Float32Array(N*3);
@@ -343,14 +434,16 @@ function toggleWireframe() {
         const frameIdx = Math.floor(i / ptsPerFrame);
         const angle = (frameIdx / nFrames) * Math.PI * 2;
         const r = 1.0;
-        const noise = () => (Math.random()-0.5)*0.12;
+        const noise = () => (Math.random()-0.5)*0.1;
         positions[i*3]   = r*Math.cos(angle) + noise();
-        positions[i*3+1] = (Math.random()-0.5)*1.4 + noise();
+        positions[i*3+1] = (Math.random()-0.5)*1.3 + noise();
         positions[i*3+2] = r*Math.sin(angle) + noise();
-        // Colores cálidos (simula objeto real)
-        colors[i*3]   = 0.55 + Math.random()*0.35;
-        colors[i*3+1] = 0.45 + Math.random()*0.3;
-        colors[i*3+2] = 0.3  + Math.random()*0.2;
+        
+        // Color premium (Gradiente de rosa a cian)
+        const t = Math.random();
+        colors[i*3]   = 0.38 * t + 0.92 * (1-t); // Mezcla R
+        colors[i*3+1] = 0.4  * t + 0.28 * (1-t); // Mezcla G
+        colors[i*3+2] = 0.95;                    // B
       }
       geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
@@ -367,7 +460,7 @@ function toggleWireframe() {
   window.addEventListener('mouseup',()=>drag=false);
   window.addEventListener('mousemove',e=>{
     if(!drag)return;
-    ry+=(e.clientX-px)*0.008; rx+=(e.clientY-py)*0.008;
+    ry+=(e.clientX-px)*0.007; rx+=(e.clientY-py)*0.007;
     px=e.clientX;py=e.clientY;
   });
   
@@ -381,7 +474,7 @@ function toggleWireframe() {
   let t=0;
   (function animate(){
     requestAnimationFrame(animate);
-    t+=0.004;
+    t+=0.003;
     pts.rotation.y = ry + t;
     pts.rotation.x = rx;
     renderer.render(scene,camera);
