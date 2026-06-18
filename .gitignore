@@ -32,6 +32,15 @@ resultado_texturas.jpg
 resultado_suavizado.jpg
 web/paisaje.jpg
 
+# Archivos eliminados del repositorio
+Informe_Tecnico_JonathanGutierrez.docx
+generar_informe.py
+logo_umsa.png
+web/logo_umsa.png
+web/resultado_texturas.jpg
+web/resultado_suavizado.jpg
+web/mascara_texturas.jpg
+
 # Carpetas del sistema o editores
 .vscode/
 .idea/
