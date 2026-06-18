@@ -1,149 +1,28 @@
 /* ═══════════════════════════════════════════════════════════
-   app.js — Proyecto Multimedia I · Jonathan Gutierrez Condori
-   Three.js: Hero, Animación 3D, Visor Fotogramétrico
-   Formularios dinámicos desde JSON
+   app.js — Trabajo Individual Multimedia · Jonathan Gutierrez
    ═══════════════════════════════════════════════════════════ */
 
 // ══════════════════════════════════════════════════════════
-// FLUJOS JSON (inline para evitar CORS en file://)
-// ══════════════════════════════════════════════════════════
-const FLUJOS = {
-  inscripcion: {
-    flujo: "inscripcion",
-    nombre: "Inscripción de Materias",
-    descripcion: "Formulario para inscribirse a materias del siguiente semestre.",
-    campos: [
-      { id:"nombre",    label:"Nombre completo",     tipo:"text",   requerido:true  },
-      { id:"carnet",    label:"Número de carnet",    tipo:"text",   requerido:true  },
-      { id:"carrera",   label:"Carrera",             tipo:"select", opciones:["Informática","Matemáticas","Física","Química"], requerido:true },
-      { id:"semestre",  label:"Semestre actual",     tipo:"select", opciones:["1ro","2do","3ro","4to","5to","6to","7mo","8vo","9no","10mo"] },
-      { id:"materias",  label:"Materias a inscribir",tipo:"textarea",requerido:true },
-      { id:"email",     label:"Correo electrónico",  tipo:"email",  requerido:true  }
-    ],
-    procesos: [
-      { id:"P1", nombre:"Completar formulario",      rol:"estudiante" },
-      { id:"P2", nombre:"Revisar y aprobar",          rol:"asesor"     },
-      { id:"P3", nombre:"Registrar en Kardex",        rol:"kardex"     },
-      { id:"P4", nombre:"Notificar al estudiante",    rol:"asesor"     }
-    ]
-  },
-  certificado: {
-    flujo: "certificado",
-    nombre: "Certificado de Notas",
-    descripcion: "Solicitud de certificado académico de notas por gestión.",
-    campos: [
-      { id:"nombre",   label:"Nombre completo",   tipo:"text",   requerido:true },
-      { id:"carnet",   label:"Número de carnet",  tipo:"text",   requerido:true },
-      { id:"gestion",  label:"Gestión solicitada",tipo:"select", opciones:["2024-I","2024-II","2025-I","2025-II","2026-I"] },
-      { id:"motivo",   label:"Motivo de la solicitud", tipo:"textarea" },
-      { id:"urgente",  label:"¿Es urgente?",      tipo:"select", opciones:["No","Sí — necesito en 24h"] }
-    ],
-    procesos: [
-      { id:"P1", nombre:"Completar solicitud",    rol:"estudiante" },
-      { id:"P2", nombre:"Verificar datos",         rol:"secretaria" },
-      { id:"P3", nombre:"Generar certificado",     rol:"sistemas"   },
-      { id:"P4", nombre:"Entregar al estudiante",  rol:"secretaria" }
-    ]
-  }
-};
-
-// ══════════════════════════════════════════════════════════
-// FORMULARIOS DINÁMICOS
-// ══════════════════════════════════════════════════════════
-function cargarFlujo(nombre) {
-  const flujo = FLUJOS[nombre];
-  if (!flujo) return;
-
-  // Activar botón
-  document.querySelectorAll('.btn-tramite').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.btn-tramite').forEach(b => {
-    if (b.textContent.toLowerCase().includes(nombre === 'inscripcion' ? 'inscripción' : 'certificado'))
-      b.classList.add('active');
-  });
-
-  // Info del formulario
-  document.getElementById('formInfo').innerHTML = `
-    <h3>${flujo.nombre}</h3>
-    <p>${flujo.descripcion}</p>
-  `;
-
-  // Campos dinámicos
-  const form = document.getElementById('tramiteForm');
-  form.innerHTML = '';
-  flujo.campos.forEach(campo => {
-    const grupo = document.createElement('div');
-    grupo.className = 'form-group';
-    let inputHTML = '';
-    if (campo.tipo === 'select') {
-      inputHTML = `<select id="${campo.id}" ${campo.requerido ? 'required' : ''}>
-        ${campo.opciones.map(o => `<option value="${o}">${o}</option>`).join('')}
-      </select>`;
-    } else if (campo.tipo === 'textarea') {
-      inputHTML = `<textarea id="${campo.id}" rows="3" placeholder="Ingrese aquí..." ${campo.requerido ? 'required' : ''}></textarea>`;
-    } else {
-      inputHTML = `<input type="${campo.tipo}" id="${campo.id}" placeholder="${campo.label}" ${campo.requerido ? 'required' : ''}>`;
-    }
-    grupo.innerHTML = `<label for="${campo.id}">${campo.label}${campo.requerido ? ' <span style="color:#ef4444">*</span>' : ''}</label>${inputHTML}`;
-    form.appendChild(grupo);
-  });
-
-  // Botón enviar
-  const btn = document.createElement('button');
-  btn.type = 'submit';
-  btn.className = 'btn-submit';
-  btn.textContent = '📤 Enviar solicitud';
-  form.appendChild(btn);
-
-  form.onsubmit = (e) => {
-    e.preventDefault();
-    btn.textContent = '✅ Solicitud enviada con éxito';
-    btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
-    setTimeout(() => {
-      btn.textContent = '📤 Enviar solicitud';
-      btn.style.background = '';
-    }, 3000);
-  };
-
-  // Pasos del flujo
-  const stepsDiv = document.getElementById('formSteps');
-  stepsDiv.innerHTML = `<h4>Flujo del trámite</h4><div class="steps-list">
-    ${flujo.procesos.map((p, i) => `
-      <div class="step-badge">
-        <span style="color:#94a3b8">${p.id}</span>
-        ${p.nombre}
-        <span class="step-role">[${p.rol}]</span>
-        ${i < flujo.procesos.length - 1 ? '<span style="color:#6366f1">→</span>' : ''}
-      </div>
-    `).join('')}
-  </div>`;
-}
-
-// ══════════════════════════════════════════════════════════
-// TEXTURA DE PARTÍCULA CIRCULAR GLOWING (Elimina cuadrados feos)
+// TEXTURA DE PARTÍCULA CIRCULAR GLOWING
 // ══════════════════════════════════════════════════════════
 function createCircleTexture(colorStr = '#ffffff', size = 64) {
   const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
+  canvas.width = size; canvas.height = size;
   const ctx = canvas.getContext('2d');
-  
-  // Gradiente radial para difuminar bordes y dar efecto de luz suave
   const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
   grad.addColorStop(0, colorStr);
   grad.addColorStop(0.25, colorStr);
   grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.2)');
   grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-  
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
   ctx.fill();
-  
   return new THREE.CanvasTexture(canvas);
 }
 
 // ══════════════════════════════════════════════════════════
-// THREE.JS — HERO CANVAS (partículas flotantes de alta calidad)
+// THREE.JS — HERO CANVAS (partículas flotantes verde esmeralda)
 // ══════════════════════════════════════════════════════════
 (function initHero() {
   const canvas = document.getElementById('heroCanvas');
@@ -156,7 +35,6 @@ function createCircleTexture(colorStr = '#ffffff', size = 64) {
   const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
   camera.position.z = 5;
 
-  // Nube de partículas circulares suaves
   const geo = new THREE.BufferGeometry();
   const N = 800;
   const pos = new Float32Array(N * 3);
@@ -166,33 +44,25 @@ function createCircleTexture(colorStr = '#ffffff', size = 64) {
     pos[i*3+1] = (Math.random()-0.5)*9;
     pos[i*3+2] = (Math.random()-0.5)*6;
     const t = Math.random();
-    col[i*3]   = 0.38 + t*0.2; // R
-    col[i*3+1] = 0.4  + t*0.3; // G (mezcla de indigo a cian)
-    col[i*3+2] = 0.95;         // B
+    // Paleta verde oscuro → verde menta
+    col[i*3]   = 0.05 + t*0.15;  // R
+    col[i*3+1] = 0.55 + t*0.35;  // G
+    col[i*3+2] = 0.15 + t*0.25;  // B
   }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  geo.setAttribute('color',    new THREE.BufferAttribute(col,3));
-  
-  const circleTexture = createCircleTexture('#ffffff', 64);
-  const mat = new THREE.PointsMaterial({ 
-    size: 0.12, 
-    vertexColors: true, 
-    map: circleTexture,
-    transparent: true, 
-    opacity: 0.75,
-    depthWrite: false,
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+
+  const circleTexture = createCircleTexture('#34d399', 64);
+  const mat = new THREE.PointsMaterial({
+    size: 0.12, vertexColors: true, map: circleTexture,
+    transparent: true, opacity: 0.8, depthWrite: false,
     blending: THREE.AdditiveBlending
   });
   scene.add(new THREE.Points(geo, mat));
 
-  // Anillo decorativo futurista
-  const ringGeo = new THREE.TorusGeometry(2.2, 0.03, 16, 100);
-  const ringMat = new THREE.MeshBasicMaterial({ 
-    color: 0x06b6d4, 
-    transparent: true, 
-    opacity: 0.45,
-    wireframe: true 
-  });
+  // Anillo decorativo verde
+  const ringGeo = new THREE.TorusGeometry(2.2, 0.025, 16, 100);
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x16a34a, transparent: true, opacity: 0.5, wireframe: true });
   const ring = new THREE.Mesh(ringGeo, ringMat);
   ring.rotation.x = 0.6;
   scene.add(ring);
@@ -213,287 +83,436 @@ function createCircleTexture(colorStr = '#ffffff', size = 64) {
 })();
 
 // ══════════════════════════════════════════════════════════
-// THREE.JS — ANIMACIÓN 3D INTERACTIVA (Upgrade Materiales y Luces)
+// PROCESAMIENTO DE IMÁGENES — Estados globales independientes
 // ══════════════════════════════════════════════════════════
-let threeScene, threeCamera, threeRenderer, meshPrincipal, isWireframe = false;
-let orbitLight; // Luz en órbita para reflejos dinámicos
+let imageDataA_original = null; // Datos originales Sección A
+let currentImageSrcA = null;    // Fuente actual Sección A
 
-(function initThree() {
-  const canvas = document.getElementById('threeCanvas');
-  if (!canvas || typeof THREE === 'undefined') return;
-  threeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  threeRenderer.setClearColor(0x03050b);
-  const w = canvas.clientWidth || 700, h = 520;
-  threeRenderer.setSize(w, h, false);
+let imageDataB_original = null; // Datos originales Sección B
+let currentImageSrcB = null;    // Fuente actual Sección B
 
-  threeScene  = new THREE.Scene();
-  threeCamera = new THREE.PerspectiveCamera(50, w/h, 0.1, 100);
-  threeCamera.position.set(0, 0, 4.2);
+// Mostrar/Ocultar elementos de canvas vacíos
+function mostrarCanvas(canvasId, emptyId, show) {
+  const canvas = document.getElementById(canvasId);
+  const empty = document.getElementById(emptyId);
+  if (canvas) canvas.style.display = show ? 'block' : 'none';
+  if (empty) empty.style.display = show ? 'none' : 'block';
+}
 
-  // Luces premium
-  threeScene.add(new THREE.AmbientLight(0x131930, 2.0));
-  
-  const dirLight = new THREE.DirectionalLight(0x06b6d4, 3.5); // Luz cian
-  dirLight.position.set(4, 4, 4);
-  threeScene.add(dirLight);
-  
-  const fillLight = new THREE.DirectionalLight(0x6366f1, 2.5); // Luz índigo
-  fillLight.position.set(-4, -2, -3);
-  threeScene.add(fillLight);
-
-  // Luz puntual giratoria de color rosa caliente para crear reflejos especulares de ensueño
-  orbitLight = new THREE.PointLight(0xec4899, 4, 12);
-  threeScene.add(orbitLight);
-
-  // Geometría y material avanzado MeshPhysicalMaterial (Transparencia, brillo, laca clara)
-  const geo = new THREE.SphereGeometry(1.25, 64, 64);
-  const mat = new THREE.MeshPhysicalMaterial({
-    color: 0x6366f1,
-    roughness: 0.12,
-    metalness: 0.85,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.05,
-    reflectivity: 1.0,
-    transparent: true,
-    opacity: 0.92,
-    flatShading: false
-  });
-  meshPrincipal = new THREE.Mesh(geo, mat);
-  threeScene.add(meshPrincipal);
-
-  // Grid de fondo estilizado
-  const grid = new THREE.GridHelper(20, 30, 0x1e293b, 0x1e293b);
-  grid.position.y = -2.1;
-  threeScene.add(grid);
-
-  // Partículas flotantes de fondo
-  const pgeo = new THREE.BufferGeometry();
-  const pp = new Float32Array(500*3);
-  for (let i=0;i<500;i++){
-    pp[i*3]=(Math.random()-0.5)*20;
-    pp[i*3+1]=(Math.random()-0.5)*20;
-    pp[i*3+2]=(Math.random()-0.5)*20;
+// ── Utilidades RGB ↔ HSV ──────────────────────────────────
+function rgbToHsv(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0, s = max === 0 ? 0 : d / max, v = max;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
   }
-  pgeo.setAttribute('position', new THREE.BufferAttribute(pp,3));
-  
-  const starTexture = createCircleTexture('#06b6d4', 64);
-  const pointsMat = new THREE.PointsMaterial({
-    size: 0.15,
-    color: 0x06b6d4,
-    map: starTexture,
-    transparent: true,
-    opacity: 0.45,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending
-  });
-  threeScene.add(new THREE.Points(pgeo, pointsMat));
-
-  // Controles de órbita manual
-  let isDragging=false, prevX=0, prevY=0, rotX=0, rotY=0;
-  canvas.addEventListener('mousedown',e=>{isDragging=true;prevX=e.clientX;prevY=e.clientY;});
-  window.addEventListener('mouseup',()=>isDragging=false);
-  window.addEventListener('mousemove',e=>{
-    if(!isDragging)return;
-    rotY+=(e.clientX-prevX)*0.007;
-    rotX+=(e.clientY-prevY)*0.007;
-    prevX=e.clientX;prevY=e.clientY;
-  });
-  canvas.addEventListener('wheel',e=>{
-    if (e.ctrlKey) {
-      e.preventDefault();
-      threeCamera.position.z=Math.max(2,Math.min(8,threeCamera.position.z+e.deltaY*0.005));
-    }
-  }, { passive: false });
-
-  let t=0;
-  (function animate(){
-    requestAnimationFrame(animate);
-    t+=0.01;
-    meshPrincipal.rotation.y = rotY + t*0.35;
-    meshPrincipal.rotation.x = rotX + Math.sin(t*0.25)*0.08;
-    meshPrincipal.position.y = Math.sin(t*0.75)*0.12;
-    
-    // Mover la luz de órbita en círculo tridimensional
-    if (orbitLight) {
-      orbitLight.position.x = Math.cos(t * 1.5) * 2.8;
-      orbitLight.position.z = Math.sin(t * 1.5) * 2.8;
-      orbitLight.position.y = Math.sin(t * 0.7) * 1.5;
-    }
-    
-    threeRenderer.render(threeScene,threeCamera);
-  })();
-})();
-
-function cambiarGeometria(tipo) {
-  if (!threeScene || !meshPrincipal) return;
-  threeScene.remove(meshPrincipal);
-  let geo;
-  if (tipo==='esfera')    geo = new THREE.SphereGeometry(1.25,64,64);
-  else if(tipo==='toroide') geo = new THREE.TorusGeometry(1.05,0.42,32,100);
-  else                    geo = new THREE.IcosahedronGeometry(1.35,1);
-  meshPrincipal = new THREE.Mesh(geo, meshPrincipal.material);
-  threeScene.add(meshPrincipal);
+  return { h: h * 360, s: s * 100, v: v * 255 };
 }
 
-function toggleWireframe() {
-  if (!meshPrincipal) return;
-  isWireframe = !isWireframe;
-  meshPrincipal.material.wireframe = isWireframe;
+// ── Varianza local 5×5 ────────────────────────────────────
+function calcVarianza5x5(x, y, imgData) {
+  const W = imgData.width, d = imgData.data;
+  let sum = 0, sum2 = 0, count = 0;
+  for (let ky = -2; ky <= 2; ky++) {
+    for (let kx = -2; kx <= 2; kx++) {
+      const nx = x + kx, ny = y + ky;
+      if (nx < 0 || ny < 0 || nx >= W || ny >= imgData.height) continue;
+      const idx = (ny * W + nx) * 4;
+      const gray = 0.299 * d[idx] + 0.587 * d[idx+1] + 0.114 * d[idx+2];
+      sum += gray; sum2 += gray * gray; count++;
+    }
+  }
+  const mean = sum / count;
+  return (sum2 / count) - mean * mean;
+}
+
+// ── Cargar imagen en canvas parametrizado ───────────────────
+function cargarImagenEnCanvas(src, destino) {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    const MAX = 500;
+    let W = img.width, H = img.height;
+    if (W > MAX) { H = Math.round(H * MAX / W); W = MAX; }
+    if (H > MAX) { W = Math.round(W * MAX / H); H = MAX; }
+
+    if (destino === 'A') {
+      const cinA = document.getElementById('canvasIn');
+      const coutA = document.getElementById('canvasOut');
+      if (cinA) { cinA.width = W; cinA.height = H; }
+      if (coutA) { coutA.width = W; coutA.height = H; }
+
+      const ctxA = cinA.getContext('2d');
+      ctxA.drawImage(img, 0, 0, W, H);
+      imageDataA_original = ctxA.getImageData(0, 0, W, H);
+      currentImageSrcA = src;
+
+      // Limpiar y mostrar canvases
+      mostrarCanvas('canvasIn', 'emptyIn', true);
+      mostrarCanvas('canvasOut', 'emptyOut', false);
+      const ctxOutA = coutA.getContext('2d');
+      ctxOutA.clearRect(0, 0, W, H);
+      // El de salida inicia como copia de la original antes de procesar
+      ctxOutA.drawImage(img, 0, 0, W, H);
+    } else if (destino === 'B') {
+      const cinB = document.getElementById('canvasInSmooth');
+      const coutB = document.getElementById('canvasOutSmooth');
+      if (cinB) { cinB.width = W; cinB.height = H; }
+      if (coutB) { coutB.width = W; coutB.height = H; }
+
+      const ctxB = cinB.getContext('2d');
+      ctxB.drawImage(img, 0, 0, W, H);
+      imageDataB_original = ctxB.getImageData(0, 0, W, H);
+      currentImageSrcB = src;
+
+      // Limpiar y mostrar canvases
+      mostrarCanvas('canvasInSmooth', 'emptyInSmooth', true);
+      mostrarCanvas('canvasOutSmooth', 'emptyOutSmooth', false);
+      const ctxOutB = coutB.getContext('2d');
+      ctxOutB.clearRect(0, 0, W, H);
+      ctxOutB.drawImage(img, 0, 0, W, H);
+    }
+  };
+  img.onerror = () => {
+    generarImagenSintetica(src, destino);
+  };
+  img.src = src;
+}
+
+// ── Imagen sintética si no existe el archivo o por presets ────
+function generarImagenSintetica(tipo, destino) {
+  const W = 400, H = 400;
+  const tmpCanvas = document.createElement('canvas');
+  tmpCanvas.width = W; tmpCanvas.height = H;
+  const ctx = tmpCanvas.getContext('2d');
+
+  // Crear imagen por cuadrantes según el tipo
+  const palettes = {
+    cesped:  [[34,139,34],[46,160,40],[22,100,22],[60,180,60]],
+    tierra:  [[139,90,43],[160,110,60],[120,75,35],[170,120,70]],
+    cemento: [[180,180,180],[195,195,195],[165,165,165],[200,200,200]],
+    asfalto: [[60,60,60],[45,45,45],[70,70,70],[55,55,55]],
+    paisaje: null // cuadrantes mixtos
+  };
+
+  if (tipo.includes('cesped') || tipo.includes('tierra') || tipo.includes('cemento') || tipo.includes('asfalto')) {
+    const key = Object.keys(palettes).find(k => tipo.includes(k)) || 'cesped';
+    const pal = palettes[key] || palettes.cesped;
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const qi = (Math.floor(x/(W/2)) + Math.floor(y/(H/2))*2);
+        const [r,g,b] = pal[qi % pal.length];
+        const noise = (Math.random()-0.5)*30;
+        ctx.fillStyle = `rgb(${r+noise},${g+noise},${b+noise})`;
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+  } else {
+    // Paisaje: 4 cuadrantes (cesped, tierra, cemento, asfalto)
+    const regiones = [
+      { x:0,   y:0,   w:W/2, h:H/2, r:34,  g:139, b:34  }, // Césped
+      { x:W/2, y:0,   w:W/2, h:H/2, r:139, g:90,  b:43  }, // Tierra
+      { x:0,   y:H/2, w:W/2, h:H/2, r:180, g:180, b:180 }, // Cemento
+      { x:W/2, y:H/2, w:W/2, h:H/2, r:60,  g:60,  b:60  }  // Asfalto
+    ];
+    regiones.forEach(reg => {
+      const imgD = ctx.createImageData(reg.w, reg.h);
+      for (let i = 0; i < imgD.data.length; i += 4) {
+        const n = (Math.random()-0.5)*40;
+        imgD.data[i]   = reg.r + n;
+        imgD.data[i+1] = reg.g + n;
+        imgD.data[i+2] = reg.b + n;
+        imgD.data[i+3] = 255;
+      }
+      ctx.putImageData(imgD, reg.x, reg.y);
+    });
+    // Etiquetas
+    ctx.font = 'bold 16px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = '#000'; ctx.shadowBlur = 4;
+    ctx.fillText('Césped', W/4, H/4);
+    ctx.fillText('Tierra', 3*W/4, H/4);
+    ctx.fillText('Cemento', W/4, 3*H/4);
+    ctx.fillText('Asfalto', 3*W/4, 3*H/4);
+  }
+
+  const src = tmpCanvas.toDataURL('image/png');
+  cargarImagenEnCanvas(src, destino);
 }
 
 // ══════════════════════════════════════════════════════════
-// THREE.JS — VISOR FOTOGRAMÉTRICO (Nube de Puntos Holográfica Glow)
+// ACTIVIDAD A: CLASIFICACIÓN DE TEXTURAS
 // ══════════════════════════════════════════════════════════
-(function initObjViewer() {
-  const canvas = document.getElementById('objCanvas');
-  if (!canvas || typeof THREE === 'undefined') return;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x03050b);
-  const w = canvas.clientWidth || 500, h = 520;
-  renderer.setSize(w, h, false);
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, w/h, 0.01, 100);
-  camera.position.set(0, 0, 3.5);
+function aplicarClasificacionTexturas() {
+  const cinA = document.getElementById('canvasIn');
+  const coutA = document.getElementById('canvasOut');
+  if (!cinA || !coutA) return;
+  if (!imageDataA_original) {
+    alert("Por favor, sube una imagen o selecciona una muestra rápida primero.");
+    return;
+  }
+  const ctxIn  = cinA.getContext('2d');
+  const ctxOut = coutA.getContext('2d');
+  const W = cinA.width, H = cinA.height;
+  const src = ctxIn.getImageData(0, 0, W, H);
+  const out = ctxOut.createImageData(W, H);
 
-  // Ejes 3D de referencia
-  const axes = new THREE.AxesHelper(0.6);
-  axes.material.opacity = 0.35;
-  axes.material.transparent = true;
-  scene.add(axes);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const i = (y * W + x) * 4;
+      const r = src.data[i], g = src.data[i+1], b = src.data[i+2];
+      const {h, s, v} = rgbToHsv(r, g, b);
+      const variance = calcVarianza5x5(x, y, src);
 
-  // Luces de ambientación
-  scene.add(new THREE.AmbientLight(0x131930, 2.5));
+      let nr = 128, ng = 0, nb = 128; // default: Otros (morado)
 
-  // Inicializar geometría y material de partículas circulares suaves (Holograma Glow)
-  const geo = new THREE.BufferGeometry();
-  
-  const particleTexture = createCircleTexture('#ffffff', 64);
-  const pointsMaterial = new THREE.PointsMaterial({ 
-    size: 0.045, // Tamaño perfecto de partícula
-    vertexColors: true,
-    map: particleTexture,
-    transparent: true,
-    alphaTest: 0.001,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending // Glow holográfico en aditivo
-  });
-  
-  const pts = new THREE.Points(geo, pointsMaterial);
-  scene.add(pts);
+      if (h >= 30 && h <= 90 && s >= 40 && variance > 5) {
+        // Césped — verde
+        nr = 34; ng = 180; nb = 34;
+      } else if (h >= 5 && h < 30 && s >= 30 && variance > 15) {
+        // Tierra — marrón
+        nr = 160; ng = 90; nb = 42;
+      } else if (s < 30 && v >= 100 && variance <= 15) {
+        // Cemento — gris claro
+        nr = 200; ng = 200; nb = 200;
+      } else if (s < 35 && v < 100 && variance > 15) {
+        // Asfalto — gris oscuro
+        nr = 72; ng = 72; nb = 72;
+      }
 
-  // Cargar modelo real (con fallback a simulación por CORS en file://)
-  fetch('modelo/GutierrezCondori_modelo.obj')
-    .then(response => {
-      if (!response.ok) throw new Error('Error al cargar archivo');
-      return response.text();
-    })
-    .then(text => {
-      const posArray = [];
-      const colArray = [];
-      const lines = text.split('\n');
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line.startsWith('v ')) {
-          const parts = line.split(/\s+/);
-          if (parts.length >= 4) {
-            posArray.push(parseFloat(parts[1]), parseFloat(parts[2]), parseFloat(parts[3]));
-            if (parts.length >= 7) {
-              colArray.push(parseFloat(parts[4]), parseFloat(parts[5]), parseFloat(parts[6]));
-            } else {
-              colArray.push(0.06, 0.71, 0.83); // Color cian por defecto
-            }
-          }
+      out.data[i]   = nr;
+      out.data[i+1] = ng;
+      out.data[i+2] = nb;
+      out.data[i+3] = 255;
+    }
+  }
+  ctxOut.putImageData(out, 0, 0);
+  mostrarCanvas('canvasOut', 'emptyOut', true);
+}
+
+// ══════════════════════════════════════════════════════════
+// ACTIVIDAD B: FILTRO DE SUAVIZADO 3×3 (Promedio)
+// ══════════════════════════════════════════════════════════
+function aplicarFiltroPromedio() {
+  const cinB = document.getElementById('canvasInSmooth');
+  const coutB = document.getElementById('canvasOutSmooth');
+  if (!cinB || !coutB) return;
+  if (!imageDataB_original) {
+    alert("Por favor, sube una imagen o selecciona una muestra rápida primero.");
+    return;
+  }
+  const ctxIn  = cinB.getContext('2d');
+  const ctxOut = coutB.getContext('2d');
+  const W = cinB.width, H = cinB.height;
+  const src = ctxIn.getImageData(0, 0, W, H);
+  const out = ctxOut.createImageData(W, H);
+  const s = src.data;
+  const o = out.data;
+
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      let sumR = 0, sumG = 0, sumB = 0, count = 0;
+
+      // Ventana 3×3
+      for (let ky = -1; ky <= 1; ky++) {
+        for (let kx = -1; kx <= 1; kx++) {
+          const nx = x + kx, ny = y + ky;
+          if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+          const idx = (ny * W + nx) * 4;
+          sumR += s[idx]; sumG += s[idx+1]; sumB += s[idx+2];
+          count++;
         }
       }
-      
-      if (posArray.length === 0) throw new Error('No se encontraron vértices');
-      
-      geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(posArray), 3));
-      geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colArray), 3));
-      
-      // Actualizar badge con info real
-      const badge = canvas.parentElement.querySelector('.canvas-badge');
-      if (badge) {
-        badge.textContent = `${(posArray.length / 3).toLocaleString()} vértices · Modelo Real`;
-      }
-      
-      console.log('Modelo real OBJ cargado exitosamente:', posArray.length/3, 'vértices');
-    })
-    .catch(err => {
-      console.warn('Usando fallback de simulación de nube de puntos:', err.message);
-      // Simular nube de puntos igual a la real pero con colores premium (cian/rosa)
-      const N = 5920;
-      const positions = new Float32Array(N*3);
-      const colors    = new Float32Array(N*3);
-      const ptsPerFrame = 80;
-      const nFrames = N / ptsPerFrame;
 
-      for (let i = 0; i < N; i++) {
-        const frameIdx = Math.floor(i / ptsPerFrame);
-        const angle = (frameIdx / nFrames) * Math.PI * 2;
-        const r = 1.0;
-        const noise = () => (Math.random()-0.5)*0.1;
-        positions[i*3]   = r*Math.cos(angle) + noise();
-        positions[i*3+1] = (Math.random()-0.5)*1.3 + noise();
-        positions[i*3+2] = r*Math.sin(angle) + noise();
-        
-        // Color premium (Gradiente de rosa a cian)
-        const t = Math.random();
-        colors[i*3]   = 0.38 * t + 0.92 * (1-t); // Mezcla R
-        colors[i*3+1] = 0.4  * t + 0.28 * (1-t); // Mezcla G
-        colors[i*3+2] = 0.95;                    // B
-      }
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
-      
-      const badge = canvas.parentElement.querySelector('.canvas-badge');
-      if (badge) {
-        badge.textContent = `5,920 vértices · Simulación (CORS Fallback)`;
-      }
-    });
-
-  // Mouse drag
-  let drag=false,px=0,py=0,rx=0,ry=0;
-  canvas.addEventListener('mousedown',e=>{drag=true;px=e.clientX;py=e.clientY;});
-  window.addEventListener('mouseup',()=>drag=false);
-  window.addEventListener('mousemove',e=>{
-    if(!drag)return;
-    ry+=(e.clientX-px)*0.007; rx+=(e.clientY-py)*0.007;
-    px=e.clientX;py=e.clientY;
-  });
-  
-  canvas.addEventListener('wheel',e=>{
-    if (e.ctrlKey) {
-      e.preventDefault();
-      camera.position.z=Math.max(1.5,Math.min(6,camera.position.z+e.deltaY*0.005));
+      const i = (y * W + x) * 4;
+      o[i]   = sumR / count;
+      o[i+1] = sumG / count;
+      o[i+2] = sumB / count;
+      o[i+3] = 255;
     }
-  }, { passive: false });
-
-  let t=0;
-  (function animate(){
-    requestAnimationFrame(animate);
-    t+=0.003;
-    pts.rotation.y = ry + t;
-    pts.rotation.x = rx;
-    renderer.render(scene,camera);
-  })();
-})();
-
-// ══════════════════════════════════════════════════════════
-// TABS DE PROCESAMIENTO
-// ══════════════════════════════════════════════════════════
-function mostrarTab(id) {
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  event.target.classList.add('active');
+  }
+  ctxOut.putImageData(out, 0, 0);
+  mostrarCanvas('canvasOutSmooth', 'emptyOutSmooth', true);
 }
 
 // ══════════════════════════════════════════════════════════
-// INIT
+// CONTROLES DE CARGA / MUESTRAS INDEPENDIENTES
 // ══════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  cargarFlujo('inscripcion');
+
+// ── Sección A: Clasificación de Texturas ───────────────────
+function triggerUpload() {
+  document.getElementById('imageLoader').click();
+}
+
+function handleImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => cargarImagenEnCanvas(e.target.result, 'A');
+  reader.readAsDataURL(file);
+  document.querySelectorAll('#texturas .preset-btn').forEach(b => b.classList.remove('active'));
+}
+
+function cargarMuestra(tipo) {
+  document.querySelectorAll('#texturas .preset-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('preset' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+  if (btn) btn.classList.add('active');
+
+  generarImagenSintetica(tipo, 'A');
+}
+
+function restaurarOriginal() {
+  if (!imageDataA_original) return;
+  const cinA = document.getElementById('canvasIn');
+  const coutA = document.getElementById('canvasOut');
+  if (cinA) cinA.getContext('2d').putImageData(imageDataA_original, 0, 0);
+  if (coutA) coutA.getContext('2d').putImageData(imageDataA_original, 0, 0);
+}
+
+// ── Sección B: Filtro de Suavizado ─────────────────────────
+function triggerUploadSmooth() {
+  document.getElementById('imageLoaderSmooth').click();
+}
+
+function handleImageSmooth(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => cargarImagenEnCanvas(e.target.result, 'B');
+  reader.readAsDataURL(file);
+  document.querySelectorAll('#suavizado .preset-btn').forEach(b => b.classList.remove('active'));
+}
+
+function cargarMuestraSmooth(tipo) {
+  document.querySelectorAll('#suavizado .preset-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('presetSmooth' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+  if (btn) btn.classList.add('active');
+
+  generarImagenSintetica(tipo, 'B');
+}
+
+function restaurarOriginalSmooth() {
+  if (!imageDataB_original) return;
+  const cinB = document.getElementById('canvasInSmooth');
+  const coutB = document.getElementById('canvasOutSmooth');
+  if (cinB) cinB.getContext('2d').putImageData(imageDataB_original, 0, 0);
+  if (coutB) coutB.getContext('2d').putImageData(imageDataB_original, 0, 0);
+}
+
+// ══════════════════════════════════════════════════════════
+// INICIO: Configurar canvases como vacíos al iniciar
+// ══════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  mostrarCanvas('canvasIn', 'emptyIn', false);
+  mostrarCanvas('canvasOut', 'emptyOut', false);
+  mostrarCanvas('canvasInSmooth', 'emptyInSmooth', false);
+  mostrarCanvas('canvasOutSmooth', 'emptyOutSmooth', false);
 });
+
+// ══════════════════════════════════════════════════════════
+// REPRODUCTOR MULTIMEDIA CUSTOM
+// ══════════════════════════════════════════════════════════
+const video = document.getElementById('mainVideo');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const progressBarWrapper = document.querySelector('.progress-bar-wrapper');
+const progressFill = document.getElementById('progressFill');
+const progressThumb = document.getElementById('progressThumb');
+const currentTimeSpan = document.getElementById('currentTime');
+const totalTimeSpan = document.getElementById('totalTime');
+const volumeSlider = document.getElementById('volumeSlider');
+const muteBtn = document.getElementById('muteBtn');
+const videoError = document.getElementById('videoError');
+
+if (video) {
+  // Ocultar controles nativos si la carga es exitosa para usar los personalizados
+  video.removeAttribute('controls');
+
+  // Detectar error de carga
+  video.addEventListener('error', () => {
+    if (videoError) videoError.style.display = 'flex';
+  });
+
+  // Play / Pause
+  window.togglePlayPause = function() {
+    if (video.paused || video.ended) {
+      video.play().catch(e => console.log("Auto-play blocked or error: ", e));
+      if (playPauseBtn) playPauseBtn.textContent = '⏸';
+    } else {
+      video.pause();
+      if (playPauseBtn) playPauseBtn.textContent = '▶';
+    }
+  };
+
+  // Click en el video para play/pause
+  video.addEventListener('click', window.togglePlayPause);
+
+  // Actualizar barra de progreso
+  video.addEventListener('timeupdate', () => {
+    if (video.duration) {
+      const pct = (video.currentTime / video.duration) * 100;
+      if (progressFill) progressFill.style.width = pct + '%';
+      if (progressThumb) progressThumb.style.left = pct + '%';
+      if (currentTimeSpan) currentTimeSpan.textContent = formatTime(video.currentTime);
+    }
+  });
+
+  // Cargar metadatos (duración total)
+  video.addEventListener('loadedmetadata', () => {
+    if (totalTimeSpan) totalTimeSpan.textContent = formatTime(video.duration);
+  });
+
+  // Si ya están los metadatos cargados
+  if (video.readyState >= 1) {
+    if (totalTimeSpan) totalTimeSpan.textContent = formatTime(video.duration);
+  }
+
+  // Click / Arrastrar barra de progreso
+  if (progressBarWrapper) {
+    progressBarWrapper.addEventListener('click', (e) => {
+      const rect = progressBarWrapper.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      video.currentTime = pos * video.duration;
+    });
+  }
+
+  // Cambiar volumen
+  window.cambiarVolumen = function(val) {
+    video.volume = val;
+    video.muted = (val == 0);
+    actualizarIconoMute();
+  };
+
+  // Mute / Unmute
+  window.toggleMute = function() {
+    video.muted = !video.muted;
+    actualizarIconoMute();
+  };
+
+  function actualizarIconoMute() {
+    if (video.muted || video.volume === 0) {
+      if (muteBtn) muteBtn.textContent = '🔇';
+      if (volumeSlider) volumeSlider.value = 0;
+    } else {
+      if (muteBtn) muteBtn.textContent = '🔊';
+      if (volumeSlider) volumeSlider.value = video.volume;
+    }
+  }
+
+  function formatTime(sec) {
+    if (isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  // Al terminar, resetear botón
+  video.addEventListener('ended', () => {
+    if (playPauseBtn) playPauseBtn.textContent = '▶';
+  });
+}
+

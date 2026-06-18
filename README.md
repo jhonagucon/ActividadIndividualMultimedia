@@ -1,7 +1,7 @@
-# Multimedia I — Proyecto Final
+# Trabajo Individual — Multimedia
 **Jonathan Gutierrez Condori · UMSA 2026**
 
-Repositorio del proyecto final de la materia **Multimedia I**, que incluye procesamiento de imágenes a nivel de píxel, producción multimedia con audio y animación, plataforma web 3D interactiva y reconstrucción fotogramétrica.
+Repositorio del trabajo individual de la materia **Multimedia**, que incluye procesamiento de imágenes a nivel de píxel (clasificación de texturas e implementación de un filtro de suavizado) y producción multimedia (cover animado de "La Vaca Lola" versión rockera).
 
 ---
 
@@ -101,14 +101,13 @@ Pipeline multimedia completo:
 
 ## 🌐 Plataforma Web
 
-La web incluye 4 secciones interactivas:
+La plataforma web incluye las tres actividades principales organizadas en una interfaz responsiva y estilizada con un tema verde esmeralda oscuro:
 
 | Sección | Descripción |
 |---|---|
-| **Formularios Dinámicos** | Trámites UMSA cargados desde JSON (inscripción, certificado) |
-| **Animación 3D** | Geometrías Three.js con controles de órbita (mouse drag) |
-| **Modelo Fotogramétrico** | Nube de puntos 3D del objeto reconstruido (5,920 vértices) |
-| **Procesamiento** | Visualización del código de clasificación y filtros |
+| **Clasificación de Texturas** | Subida de imágenes y presets con ejecución del algoritmo en vivo mediante Canvas API. |
+| **Filtro de Suavizado** | Carga independiente de imágenes y presets para aplicar el filtro de promedio 3×3 píxel a píxel. |
+| **Cover La Vaca Lola** | Reproductor multimedia customizado con el videoclip de la vaca rockera y el pipeline de producción detallado. |
 
 ---
 
@@ -116,23 +115,13 @@ La web incluye 4 secciones interactivas:
 
 | Herramienta | Uso |
 |---|---|
-| Python 3.13 | Procesamiento de imágenes y multimedia |
-| OpenCV 4.13 | Manipulación de imágenes y video a nivel de píxel |
-| NumPy 2.4 | Operaciones matriciales sobre arrays de píxeles |
-| edge-tts | Síntesis de voz neural (Microsoft Azure) |
-| FFmpeg | Combinación de video y audio |
-| Three.js r128 | Gráficos 3D WebGL en el navegador |
-| GitHub Pages | Hosting estático de la plataforma web |
-
----
-
-## 📷 Fotogrametría
-
-El modelo 3D fue generado mediante el siguiente pipeline:
-1. Captura de video del objeto (28.6s, 867 frames, 30.3 FPS)
-2. Extracción de fotogramas útiles (74 frames, filtrado por varianza del Laplaciano < 15)
-3. Generación de nube de puntos con coordenadas angulares y color RGB por vértice
-4. Exportación en formato estándar **OBJ** (5,920 vértices, 303 KB)
+| Python 3.10+ | Procesamiento de imágenes y renderizado de la animación |
+| OpenCV | Manipulación matricial de imágenes y dibujo de fotogramas |
+| NumPy | Optimización vectorizada de cálculos de píxeles en Python |
+| edge-tts | Síntesis de voz neural realista con el modelo MarceloNeural |
+| FFmpeg | Acoplamiento final de audio H.264 y video AAC para la web |
+| Three.js r128 | Animación interactiva de partículas verdes flotantes de fondo |
+| Canvas API | Procesamiento digital de imágenes directamente en el navegador |
 
 ---
 

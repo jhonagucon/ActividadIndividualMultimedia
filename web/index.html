@@ -3,195 +3,438 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto Multimedia I — Jonathan Gutierrez Condori</title>
+  <title>Trabajo Individual — Multimedia · Jonathan Gutierrez Condori</title>
+  <meta name="description" content="Trabajo Individual de Multimedia: Clasificación de Texturas, Filtro de Suavizado y Cover La Vaca Lola. UMSA Informática 2026.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- ══ CURSOR GLOW ══════════════════════════════════════════ -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <!-- ══ NAV ══════════════════════════════════════════════════ -->
-<nav class="navbar">
+<nav class="navbar" id="navbar">
   <div class="nav-brand">
-    <span class="brand-icon">◈</span>
-    <span>Multimedia I · 2026</span>
+    <span class="brand-dot"></span>
+    <span class="brand-name">Multimedia <em>·</em> UMSA</span>
   </div>
   <div class="nav-links">
-    <a href="#formularios" class="nav-link">Formularios</a>
-    <a href="#animacion3d" class="nav-link">Animación 3D</a>
-    <a href="#fotogrametria" class="nav-link">Fotogrametría</a>
-    <a href="#procesamiento" class="nav-link">Imágenes</a>
+    <a href="#texturas" class="nav-link"><span class="nav-num">A</span>Texturas</a>
+    <a href="#suavizado" class="nav-link"><span class="nav-num">B</span>Suavizado</a>
+    <a href="#vacalola" class="nav-link"><span class="nav-num">C</span>Vaca Lola</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://github.com" target="_blank" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      GitHub
+    </a>
   </div>
 </nav>
 
 <!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-glow-orb orb-1"></div>
+  <div class="hero-glow-orb orb-2"></div>
+
   <div class="hero-content">
-    <p class="hero-label">Universidad Mayor de San Andrés · Informática</p>
-    <h1 class="hero-title">Proyecto Final<br><span class="gradient-text">Multimedia I</span></h1>
-    <p class="hero-sub">Jonathan Gutierrez Condori · 2026</p>
-    <div class="hero-chips">
-      <span class="chip">Python</span>
-      <span class="chip">OpenCV</span>
-      <span class="chip">Three.js</span>
-      <span class="chip">Fotogrametría</span>
-      <span class="chip">edge-tts</span>
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Universidad Mayor de San Andrés · Carrera de Informática · 2026
     </div>
-    <a href="#formularios" class="btn-hero">Explorar proyecto ↓</a>
+    <h1 class="hero-title">
+      <span class="hero-word word-1">Trabajo</span>
+      <span class="hero-word word-2">Individual</span>
+      <br>
+      <span class="hero-accent">Multimedia</span>
+    </h1>
+    <p class="hero-author">JONATHAN GUTIERREZ CONDORI</p>
+    <p class="hero-desc">
+      Procesamiento de imágenes a nivel de píxel · Producción audiovisual multimedia
+    </p>
+
+    <div class="hero-activities">
+      <div class="activity-pill">
+        <span class="pill-icon">🔍</span>
+        <span>Clasificación de Texturas</span>
+        <span class="pill-tag">HSV + Varianza</span>
+      </div>
+      <div class="activity-pill">
+        <span class="pill-icon">✨</span>
+        <span>Filtro de Suavizado</span>
+        <span class="pill-tag">3×3 Promedio</span>
+      </div>
+      <div class="activity-pill">
+        <span class="pill-icon">🎵</span>
+        <span>Cover La Vaca Lola</span>
+        <span class="pill-tag">TTS + FFmpeg</span>
+      </div>
+    </div>
+
+    <div class="hero-cta-row">
+      <a href="#texturas" class="btn-primary">Explorar Actividades ↓</a>
+      <a href="#vacalola" class="btn-secondary">Ver Video 🎬</a>
+    </div>
   </div>
+
   <div class="hero-visual">
     <canvas id="heroCanvas"></canvas>
+    <div class="hero-canvas-label">Procesamiento Píxel a Píxel</div>
   </div>
 </section>
 
-<!-- ══ SECCIÓN 1: FORMULARIOS DINÁMICOS ═════════════════════ -->
-<section id="formularios" class="section">
+<!-- ══ SECCIÓN A: CLASIFICACIÓN DE TEXTURAS ══════════════════ -->
+<section id="texturas" class="section">
+  <div class="section-line"></div>
   <div class="container">
+
     <div class="section-header">
-      <span class="section-tag">01</span>
-      <h2>Formularios Dinámicos</h2>
-      <p>Sistema de trámites universitarios UMSA. El formulario carga sus campos desde un archivo JSON de flujo de procesos.</p>
-    </div>
-
-    <div class="form-controls">
-      <label>Seleccionar trámite:</label>
-      <div class="btn-group">
-        <button class="btn-tramite active" onclick="cargarFlujo('inscripcion')">📋 Inscripción de Materias</button>
-        <button class="btn-tramite" onclick="cargarFlujo('certificado')">📄 Certificado de Notas</button>
+      <div class="section-eyebrow">
+        <span class="eyebrow-letter">A</span>
+        <span class="eyebrow-text">Actividad A · Procesamiento de Imágenes</span>
       </div>
+      <h2>Clasificación de Texturas</h2>
+      <p>Diferenciación de superficies (césped, tierra, cemento, asfalto) operando directamente sobre la matriz de píxeles con análisis HSV y varianza local.</p>
     </div>
 
-    <div class="form-container">
-      <div class="form-info" id="formInfo"></div>
-      <form id="tramiteForm" class="tramite-form"></form>
-      <div class="form-steps" id="formSteps"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ SECCIÓN 2: ANIMACIÓN 3D ══════════════════════════════ -->
-<section id="animacion3d" class="section section-dark">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">02</span>
-      <h2>Animación 3D Interactiva</h2>
-      <p>Geometría procedural generada con Three.js. Arrastra para rotar, scroll para hacer zoom.</p>
-    </div>
-    <div class="canvas-wrapper">
-      <canvas id="threeCanvas"></canvas>
-      <div class="canvas-hint">🖱 Arrastrar para rotar · Ctrl + Scroll para Zoom</div>
-      <div class="canvas-controls">
-        <button onclick="cambiarGeometria('esfera')">⬤ Esfera</button>
-        <button onclick="cambiarGeometria('toroide')">◎ Toroide</button>
-        <button onclick="cambiarGeometria('icosaedro')">⬡ Icosaedro</button>
-        <button onclick="toggleWireframe()">⬜ Wireframe</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ SECCIÓN 3: MODELO FOTOGRAMÉTRICO ═════════════════════ -->
-<section id="fotogrametria" class="section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">03</span>
-      <h2>Modelo Fotogramétrico</h2>
-      <p>Nube de puntos 3D generada a partir de 74 fotogramas extraídos del video del objeto.</p>
-    </div>
-    <div class="foto-grid">
-      <div class="canvas-wrapper">
-        <canvas id="objCanvas"></canvas>
-        <div class="canvas-badge">5,920 vértices · 74 fotogramas</div>
-        <div class="canvas-hint">🖱 Arrastrar para rotar · Ctrl + Scroll para Zoom</div>
-      </div>
-      <div class="foto-stats">
-        <h3>Estadísticas del Modelo</h3>
-        <div class="stat-row"><span>Video original</span><strong>28.6 seg · 867 frames</strong></div>
-        <div class="stat-row"><span>FPS del video</span><strong>30.3 FPS</strong></div>
-        <div class="stat-row"><span>Frames extraídos</span><strong>74 útiles</strong></div>
-        <div class="stat-row"><span>Frames descartados</span><strong>13 borrosos</strong></div>
-        <div class="stat-row"><span>Vértices 3D</span><strong>5,920</strong></div>
-        <div class="stat-row"><span>Formato</span><strong>OBJ (Wavefront)</strong></div>
-        <div class="stat-row"><span>Detección borrosidad</span><strong>Laplaciano &lt; 15</strong></div>
-        <div class="stat-row"><span>Tamaño del modelo</span><strong>303.7 KB</strong></div>
-        <div class="pipeline">
-          <h4>Pipeline de reconstrucción:</h4>
-          <div class="pipeline-step">📹 Captura de video</div>
-          <div class="pipeline-arrow">↓</div>
-          <div class="pipeline-step">🔍 Filtrado por Laplaciano</div>
-          <div class="pipeline-arrow">↓</div>
-          <div class="pipeline-step">🖼 74 fotogramas nítidos</div>
-          <div class="pipeline-arrow">↓</div>
-          <div class="pipeline-step">🔵 Nube de puntos 3D</div>
-          <div class="pipeline-arrow">↓</div>
-          <div class="pipeline-step">📦 Exportación OBJ</div>
+    <!-- Panel principal -->
+    <div class="panel">
+      <div class="panel-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-label">📂 Imagen de entrada</span>
+          <button class="btn-upload" onclick="triggerUpload()">Subir imagen</button>
+          <input type="file" id="imageLoader" accept="image/*" style="display:none" onchange="handleImage(event)">
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ SECCIÓN 4: PROCESAMIENTO DE IMÁGENES ═════════════════ -->
-<section id="procesamiento" class="section section-dark">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">04</span>
-      <h2>Procesamiento de Imágenes</h2>
-      <p>Algoritmos implementados a nivel de píxel: clasificación de texturas y filtro de suavizado 3×3.</p>
-    </div>
-    <div class="proc-tabs">
-      <button class="tab-btn active" onclick="mostrarTab('texturas')">Clasificación de Texturas</button>
-      <button class="tab-btn" onclick="mostrarTab('suavizado')">Filtro Suavizado 3×3</button>
-    </div>
-    <div id="tab-texturas" class="tab-content active">
-      <div class="algo-card">
-        <div class="algo-desc">
-          <h3>Clasificación por Color y Textura</h3>
-          <p>Cada píxel se analiza en espacio HSV. La varianza local en una ventana 5×5 calcula la rugosidad de la superficie. Se clasifica en 4 categorías:</p>
-          <div class="legend">
-            <div class="legend-item"><span style="background:#22B422"></span>Césped (H: 35–85°, S alto)</div>
-            <div class="legend-item"><span style="background:#5A3A1A"></span>Tierra (H: 8–30°, S medio)</div>
-            <div class="legend-item"><span style="background:#A8A8A8"></span>Cemento (S bajo, V alto)</div>
-            <div class="legend-item"><span style="background:#303030"></span>Asfalto (S bajo, V bajo)</div>
+        <div class="toolbar-center">
+          <span class="toolbar-label">Muestras rápidas:</span>
+          <div class="preset-group">
+            <button class="preset-btn active" id="presetPaisaje" onclick="cargarMuestra('paisaje')">🏞 Paisaje</button>
+            <button class="preset-btn" id="presetCesped" onclick="cargarMuestra('cesped')">🌿 Césped</button>
+            <button class="preset-btn" id="presetTierra" onclick="cargarMuestra('tierra')">🟤 Tierra</button>
+            <button class="preset-btn" id="presetCemento" onclick="cargarMuestra('cemento')">🩶 Cemento</button>
+            <button class="preset-btn" id="presetAsfalto" onclick="cargarMuestra('asfalto')">⬛ Asfalto</button>
           </div>
         </div>
-        <div class="result-image-container">
-          <img src="resultado_texturas.jpg" alt="Resultado Clasificación de Texturas" class="result-img">
-          <div class="image-caption">Izquierda: Imagen original | Derecha: Clasificación de texturas a nivel de píxel</div>
-        </div>
       </div>
-    </div>
-    <div id="tab-suavizado" class="tab-content">
-      <div class="algo-card">
-        <div class="algo-desc">
-          <h3>Filtro de Promedio 3×3 Manual</h3>
-          <p>Para cada píxel (excluyendo bordes), se calcula el promedio aritmético de los 9 píxeles en la ventana 3×3. Reduce el ruido gaussiano sin usar funciones de OpenCV.</p>
-          <div class="formula-box">
-            <strong>Fórmula:</strong><br>
-            P'(x,y) = Σ P(x+i, y+j) / 9<br>
-            donde i,j ∈ {-1, 0, 1}
+
+      <div class="action-bar">
+        <button class="btn-run" onclick="aplicarClasificacionTexturas()">
+          <span class="btn-run-icon">▶</span> Ejecutar Clasificación (HSV + Varianza)
+        </button>
+        <button class="btn-reset" onclick="restaurarOriginal()">↺ Restaurar</button>
+      </div>
+
+      <div class="canvas-duo">
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge input-badge">ENTRADA</span>
+            <span class="pane-title">Imagen Original</span>
           </div>
-          <table class="kernel-table">
-            <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
-            <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
-            <tr><td>1/9</td><td>1/9</td><td>1/9</td></tr>
-          </table>
+          <div class="canvas-frame" id="frameIn">
+            <canvas id="canvasIn"></canvas>
+            <div class="canvas-empty" id="emptyIn">Sube una imagen o selecciona una muestra rápida</div>
+          </div>
         </div>
-        <div class="result-image-container">
-          <img src="resultado_suavizado.jpg" alt="Resultado Filtro Suavizado 3x3" class="result-img">
-          <div class="image-caption">Izquierda: Imagen con ruido de entrada | Derecha: Imagen suavizada de salida</div>
+        <div class="canvas-divider">
+          <div class="divider-arrow">→</div>
+          <div class="divider-label">Píxel<br>a Píxel</div>
+        </div>
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge output-badge">SALIDA</span>
+            <span class="pane-title">Mapa de Texturas</span>
+          </div>
+          <div class="canvas-frame" id="frameOut">
+            <canvas id="canvasOut"></canvas>
+            <div class="canvas-empty" id="emptyOut">Presiona ▶ para clasificar texturas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leyenda + código -->
+      <div class="info-grid">
+        <div class="legend-card">
+          <h4>Colores de Clasificación</h4>
+          <div class="legend-list">
+            <div class="legend-row"><div class="legend-swatch" style="background:#22B422"></div><div><strong>Césped</strong> — H:30°–90°, S≥40, Var&gt;5</div></div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#A05A2A"></div><div><strong>Tierra</strong> — H:5°–30°, S≥30, Var&gt;15</div></div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#C8C8C8"></div><div><strong>Cemento</strong> — S&lt;30, V≥100, Var≤15</div></div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#484848; border-color:#666"></div><div><strong>Asfalto</strong> — S&lt;35, V&lt;100, Var&gt;15</div></div>
+            <div class="legend-row"><div class="legend-swatch" style="background:#800080"></div><div><strong>Otros</strong> — No clasificado</div></div>
+          </div>
+        </div>
+        <div class="code-card">
+          <div class="code-card-header">
+            <span class="code-lang-dot"></span>
+            <span class="code-lang-name">JavaScript · Canvas API</span>
+          </div>
+          <pre class="code-pre"><code><span class="c-comment">// Para cada píxel (x, y) de la imagen:</span>
+<span class="c-kw">const</span> i = (y * W + x) * 4;
+<span class="c-kw">const</span> {h, s, v} = rgbToHsv(data[i], data[i+1], data[i+2]);
+<span class="c-kw">const</span> variance  = calcVarianza5x5(x, y, imageData);
+
+<span class="c-comment">// Clasificar por reglas HSV + varianza</span>
+<span class="c-kw">if</span> (h >= 30 && h <= 90 && s >= 40 && variance > 5)
+  → <span class="c-str">CÉSPED  </span>[0, 180, 0]
+<span class="c-kw">else if</span> (h >= 5 && h < 30 && s >= 30 && variance > 15)
+  → <span class="c-str">TIERRA  </span>[160, 90, 42]
+<span class="c-kw">else if</span> (s < 30 && v >= 100 && variance <= 15)
+  → <span class="c-str">CEMENTO </span>[200, 200, 200]
+<span class="c-kw">else if</span> (s < 35 && v < 100 && variance > 15)
+  → <span class="c-str">ASFALTO </span>[72, 72, 72]
+<span class="c-kw">else</span>
+  → <span class="c-str">OTROS   </span>[128, 0, 128]</code></pre>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN B: FILTRO DE SUAVIZADO ════════════════════════ -->
+<section id="suavizado" class="section section-alt">
+  <div class="section-line"></div>
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <span class="eyebrow-letter">B</span>
+        <span class="eyebrow-text">Actividad B · Filtro Espacial</span>
+      </div>
+      <h2>Filtro de Suavizado 3×3</h2>
+      <p>Filtro de promedio que recorre la imagen con ventana deslizante de 3×3 para reducir ruido y suavizar transiciones, implementado manualmente sobre la matriz de píxeles.</p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-label">📂 Imagen de entrada</span>
+          <button class="btn-upload" onclick="triggerUploadSmooth()">Subir imagen</button>
+          <input type="file" id="imageLoaderSmooth" accept="image/*" style="display:none" onchange="handleImageSmooth(event)">
+        </div>
+        <div class="toolbar-center">
+          <span class="toolbar-label">Muestras rápidas:</span>
+          <div class="preset-group">
+            <button class="preset-btn" id="presetSmoothPaisaje" onclick="cargarMuestraSmooth('paisaje')">🏞 Paisaje</button>
+            <button class="preset-btn" id="presetSmoothCesped" onclick="cargarMuestraSmooth('cesped')">🌿 Césped</button>
+            <button class="preset-btn" id="presetSmoothTierra" onclick="cargarMuestraSmooth('tierra')">🟤 Tierra</button>
+            <button class="preset-btn" id="presetSmoothCemento" onclick="cargarMuestraSmooth('cemento')">🩶 Cemento</button>
+            <button class="preset-btn" id="presetSmoothAsfalto" onclick="cargarMuestraSmooth('asfalto')">⬛ Asfalto</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-run btn-smooth" onclick="aplicarFiltroPromedio()">
+          <span class="btn-run-icon">▶</span> Aplicar Filtro Promedio 3×3
+        </button>
+        <button class="btn-reset" onclick="restaurarOriginalSmooth()">↺ Restaurar</button>
+      </div>
+
+      <div class="canvas-duo">
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge input-badge">ANTES</span>
+            <span class="pane-title">Imagen Original</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="canvasInSmooth"></canvas>
+            <div class="canvas-empty" id="emptyInSmooth">Sube una imagen o selecciona una muestra rápida</div>
+          </div>
+        </div>
+        <div class="canvas-divider">
+          <div class="divider-arrow">→</div>
+          <div class="divider-label">Ventana<br>3×3</div>
+        </div>
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge output-badge">DESPUÉS</span>
+            <span class="pane-title">Imagen Suavizada</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="canvasOutSmooth"></canvas>
+            <div class="canvas-empty" id="emptyOutSmooth">Presiona ▶ para aplicar filtro suavizado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="algorithm-card">
+          <h4>¿Cómo funciona?</h4>
+          <div class="kernel-visual">
+            <div class="kernel-label">Kernel 3×3 (todos = 1/9)</div>
+            <div class="kernel-grid">
+              <div>1/9</div><div>1/9</div><div>1/9</div>
+              <div>1/9</div><div class="kernel-center">1/9</div><div>1/9</div>
+              <div>1/9</div><div>1/9</div><div>1/9</div>
+            </div>
+            <div class="kernel-eq">Resultado = Σ(9 vecinos) ÷ 9</div>
+          </div>
+        </div>
+        <div class="code-card">
+          <div class="code-card-header">
+            <span class="code-lang-dot"></span>
+            <span class="code-lang-name">JavaScript · Ventana deslizante</span>
+          </div>
+          <pre class="code-pre"><code><span class="c-kw">for</span> (<span class="c-kw">let</span> y = 0; y &lt; H; y++) {
+  <span class="c-kw">for</span> (<span class="c-kw">let</span> x = 0; x &lt; W; x++) {
+    <span class="c-kw">let</span> sumR=0, sumG=0, sumB=0, n=0;
+    <span class="c-comment">// Ventana 3×3 alrededor de (x, y)</span>
+    <span class="c-kw">for</span> (<span class="c-kw">let</span> ky=-1; ky&lt;=1; ky++) {
+      <span class="c-kw">for</span> (<span class="c-kw">let</span> kx=-1; kx&lt;=1; kx++) {
+        <span class="c-kw">const</span> idx = ((y+ky)*W+(x+kx))*4;
+        sumR += src[idx];
+        sumG += src[idx+1];
+        sumB += src[idx+2];
+        n++;
+      }
+    }
+    <span class="c-comment">// Promedio de los 9 vecinos</span>
+    out[i] = sumR/n;   <span class="c-comment">// R</span>
+    out[i+1] = sumG/n; <span class="c-comment">// G</span>
+    out[i+2] = sumB/n; <span class="c-comment">// B</span>
+  }
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN C: COVER "LA VACA LOLA" ═══════════════════════ -->
+<section id="vacalola" class="section">
+  <div class="section-line"></div>
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <span class="eyebrow-letter">C</span>
+        <span class="eyebrow-text">Actividad C · Producción Multimedia</span>
+      </div>
+      <h2>Cover de "La Vaca Lola"</h2>
+      <p>Producción multimedia de la canción infantil con síntesis de voz neural TTS sincronizada con animación de video. Audio y video fusionados con FFmpeg.</p>
+    </div>
+
+    <!-- Reproductor de video destacado -->
+    <div class="video-showcase">
+      <div class="video-showcase-inner">
+        <div class="video-label-bar">
+          <div class="video-label-left">
+            <span class="rec-dot"></span>
+            <span>Cover Multimedia · La Vaca Lola</span>
+          </div>
+          <div class="video-label-right">
+            <span class="tech-chip">edge-tts</span>
+            <span class="tech-chip">FFmpeg</span>
+            <span class="tech-chip">Python</span>
+          </div>
+        </div>
+        <div class="video-wrapper" id="videoWrapper">
+          <video id="mainVideo" class="main-video" controls playsinline preload="metadata">
+            <source src="vaca_lola_video.mp4" type="video/mp4">
+          </video>
+          <div class="video-error" id="videoError" style="display:none">
+            <div class="video-error-icon">🎬</div>
+            <p>El archivo <code>vaca_lola_video.mp4</code> no se encontró en la carpeta <code>web/</code>.</p>
+            <p>Cópialo desde la raíz del proyecto a la carpeta <code>web/</code>.</p>
+          </div>
+        </div>
+        <!-- Controles de audio personalizados -->
+        <div class="audio-controls" id="audioControls">
+          <button class="audio-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar" id="progressBar">
+              <div class="progress-fill" id="progressFill"></div>
+              <div class="progress-thumb" id="progressThumb"></div>
+            </div>
+          </div>
+          <div class="time-display">
+            <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+          </div>
+          <div class="volume-ctrl">
+            <span>🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" oninput="cambiarVolumen(this.value)">
+          </div>
+          <button class="audio-btn" onclick="toggleMute()" id="muteBtn">🔊</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proceso de producción -->
+    <div class="process-flow">
+      <h3 class="process-title">Pipeline de Producción</h3>
+      <div class="process-steps-row">
+
+        <div class="process-card">
+          <div class="process-card-num">01</div>
+          <div class="process-card-icon">🎤</div>
+          <h4>Síntesis de Voz</h4>
+          <p>edge-tts genera el audio de la canción con una voz neural de alta calidad en español</p>
+          <div class="code-mini">
+            <pre><code>communicate = edge_tts.Communicate(
+  text=letra,
+  voice=<span class="c-str">"es-MX-JorgeNeural"</span>,
+  rate=<span class="c-str">"-10%"</span>
+)
+<span class="c-kw">await</span> communicate.save(<span class="c-str">"audio.mp3"</span>)</code></pre>
+          </div>
+        </div>
+
+        <div class="process-arrow">→</div>
+
+        <div class="process-card">
+          <div class="process-card-num">02</div>
+          <div class="process-card-icon">🎨</div>
+          <h4>Animación</h4>
+          <p>Personaje animado cuadro a cuadro con movimientos sincronizados al ritmo de la música</p>
+          <div class="code-mini">
+            <pre><code><span class="c-comment"># Sincronizar boca con el ritmo</span>
+boca = abs(sin(t * 2 * pi * 2))
+<span class="c-comment"># Balanceo del cuerpo</span>
+cuerpo = sin(t * pi) * 5°
+<span class="c-comment"># Render del frame</span>
+render_frame(frame, boca, cuerpo)</code></pre>
+          </div>
+        </div>
+
+        <div class="process-arrow">→</div>
+
+        <div class="process-card">
+          <div class="process-card-num">03</div>
+          <div class="process-card-icon">🎬</div>
+          <h4>Composición Final</h4>
+          <p>FFmpeg fusiona el video de animación con el audio TTS en un MP4 listo para la web</p>
+          <div class="code-mini">
+            <pre><code>ffmpeg \
+  -i animacion.mp4 \
+  -i audio.mp3 \
+  -c:v copy -c:a aac \
+  -movflags +faststart \
+  vaca_lola_video.mp4</code></pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- ══ FOOTER ════════════════════════════════════════════════ -->
 <footer class="footer">
   <div class="container">
-    <p><strong>Jonathan Gutierrez Condori</strong> · Multimedia I · UMSA 2026</p>
-    <p>Tecnologías: Python · OpenCV · Three.js · edge-tts · FFmpeg · GitHub Pages</p>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="footer-dot"></span>
+        <strong>JONATHAN GUTIERREZ CONDORI</strong>
+      </div>
+      <p>Trabajo Individual · Multimedia · Universidad Mayor de San Andrés · 2026</p>
+      <div class="footer-tech">
+        <span>Python</span><span>OpenCV</span><span>NumPy</span>
+        <span>edge-tts</span><span>FFmpeg</span><span>Three.js</span><span>Canvas API</span>
+      </div>
+    </div>
   </div>
 </footer>
 
