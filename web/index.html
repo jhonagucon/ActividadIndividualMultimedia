@@ -153,41 +153,6 @@
         </div>
       </div>
 
-      <!-- Leyenda + código -->
-      <div class="info-grid">
-        <div class="legend-card">
-          <h4>Colores de Clasificación</h4>
-          <div class="legend-list">
-            <div class="legend-row"><div class="legend-swatch" style="background:#22B422"></div><div><strong>Césped</strong> — H:30°–90°, S≥40, Var&gt;5</div></div>
-            <div class="legend-row"><div class="legend-swatch" style="background:#A05A2A"></div><div><strong>Tierra</strong> — H:5°–30°, S≥30, Var&gt;15</div></div>
-            <div class="legend-row"><div class="legend-swatch" style="background:#C8C8C8"></div><div><strong>Cemento</strong> — S&lt;30, V≥100, Var≤15</div></div>
-            <div class="legend-row"><div class="legend-swatch" style="background:#484848; border-color:#666"></div><div><strong>Asfalto</strong> — S&lt;35, V&lt;100, Var&gt;15</div></div>
-            <div class="legend-row"><div class="legend-swatch" style="background:#800080"></div><div><strong>Otros</strong> — No clasificado</div></div>
-          </div>
-        </div>
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-dot"></span>
-            <span class="code-lang-name">JavaScript · Canvas API</span>
-          </div>
-          <pre class="code-pre"><code><span class="c-comment">// Para cada píxel (x, y) de la imagen:</span>
-<span class="c-kw">const</span> i = (y * W + x) * 4;
-<span class="c-kw">const</span> {h, s, v} = rgbToHsv(data[i], data[i+1], data[i+2]);
-<span class="c-kw">const</span> variance  = calcVarianza5x5(x, y, imageData);
-
-<span class="c-comment">// Clasificar por reglas HSV + varianza</span>
-<span class="c-kw">if</span> (h >= 30 && h <= 90 && s >= 40 && variance > 5)
-  → <span class="c-str">CÉSPED  </span>[0, 180, 0]
-<span class="c-kw">else if</span> (h >= 5 && h < 30 && s >= 30 && variance > 15)
-  → <span class="c-str">TIERRA  </span>[160, 90, 42]
-<span class="c-kw">else if</span> (s < 30 && v >= 100 && variance <= 15)
-  → <span class="c-str">CEMENTO </span>[200, 200, 200]
-<span class="c-kw">else if</span> (s < 35 && v < 100 && variance > 15)
-  → <span class="c-str">ASFALTO </span>[72, 72, 72]
-<span class="c-kw">else</span>
-  → <span class="c-str">OTROS   </span>[128, 0, 128]</code></pre>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -259,45 +224,6 @@
         </div>
       </div>
 
-      <div class="info-grid">
-        <div class="algorithm-card">
-          <h4>¿Cómo funciona?</h4>
-          <div class="kernel-visual">
-            <div class="kernel-label">Kernel 3×3 (todos = 1/9)</div>
-            <div class="kernel-grid">
-              <div>1/9</div><div>1/9</div><div>1/9</div>
-              <div>1/9</div><div class="kernel-center">1/9</div><div>1/9</div>
-              <div>1/9</div><div>1/9</div><div>1/9</div>
-            </div>
-            <div class="kernel-eq">Resultado = Σ(9 vecinos) ÷ 9</div>
-          </div>
-        </div>
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-dot"></span>
-            <span class="code-lang-name">JavaScript · Ventana deslizante</span>
-          </div>
-          <pre class="code-pre"><code><span class="c-kw">for</span> (<span class="c-kw">let</span> y = 0; y &lt; H; y++) {
-  <span class="c-kw">for</span> (<span class="c-kw">let</span> x = 0; x &lt; W; x++) {
-    <span class="c-kw">let</span> sumR=0, sumG=0, sumB=0, n=0;
-    <span class="c-comment">// Ventana 3×3 alrededor de (x, y)</span>
-    <span class="c-kw">for</span> (<span class="c-kw">let</span> ky=-1; ky&lt;=1; ky++) {
-      <span class="c-kw">for</span> (<span class="c-kw">let</span> kx=-1; kx&lt;=1; kx++) {
-        <span class="c-kw">const</span> idx = ((y+ky)*W+(x+kx))*4;
-        sumR += src[idx];
-        sumG += src[idx+1];
-        sumB += src[idx+2];
-        n++;
-      }
-    }
-    <span class="c-comment">// Promedio de los 9 vecinos</span>
-    out[i] = sumR/n;   <span class="c-comment">// R</span>
-    out[i+1] = sumG/n; <span class="c-comment">// G</span>
-    out[i+2] = sumB/n; <span class="c-comment">// B</span>
-  }
-}</code></pre>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -361,62 +287,6 @@
       </div>
     </div>
 
-    <!-- Proceso de producción -->
-    <div class="process-flow">
-      <h3 class="process-title">Pipeline de Producción</h3>
-      <div class="process-steps-row">
-
-        <div class="process-card">
-          <div class="process-card-num">01</div>
-          <div class="process-card-icon">🎤</div>
-          <h4>Síntesis de Voz</h4>
-          <p>edge-tts genera el audio de la canción con una voz neural de alta calidad en español</p>
-          <div class="code-mini">
-            <pre><code>communicate = edge_tts.Communicate(
-  text=letra,
-  voice=<span class="c-str">"es-MX-JorgeNeural"</span>,
-  rate=<span class="c-str">"-10%"</span>
-)
-<span class="c-kw">await</span> communicate.save(<span class="c-str">"audio.mp3"</span>)</code></pre>
-          </div>
-        </div>
-
-        <div class="process-arrow">→</div>
-
-        <div class="process-card">
-          <div class="process-card-num">02</div>
-          <div class="process-card-icon">🎨</div>
-          <h4>Animación</h4>
-          <p>Personaje animado cuadro a cuadro con movimientos sincronizados al ritmo de la música</p>
-          <div class="code-mini">
-            <pre><code><span class="c-comment"># Sincronizar boca con el ritmo</span>
-boca = abs(sin(t * 2 * pi * 2))
-<span class="c-comment"># Balanceo del cuerpo</span>
-cuerpo = sin(t * pi) * 5°
-<span class="c-comment"># Render del frame</span>
-render_frame(frame, boca, cuerpo)</code></pre>
-          </div>
-        </div>
-
-        <div class="process-arrow">→</div>
-
-        <div class="process-card">
-          <div class="process-card-num">03</div>
-          <div class="process-card-icon">🎬</div>
-          <h4>Composición Final</h4>
-          <p>FFmpeg fusiona el video de animación con el audio TTS en un MP4 listo para la web</p>
-          <div class="code-mini">
-            <pre><code>ffmpeg \
-  -i animacion.mp4 \
-  -i audio.mp3 \
-  -c:v copy -c:a aac \
-  -movflags +faststart \
-  vaca_lola_video.mp4</code></pre>
-          </div>
-        </div>
-
-      </div>
-    </div>
 
   </div>
 </section>
