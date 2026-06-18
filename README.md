@@ -1,7 +1,10 @@
-# Trabajo Individual — Multimedia
+# 🎸 Trabajo Individual — Multimedia
 **Jonathan Gutierrez Condori · UMSA 2026**
 
-Repositorio del trabajo individual de la materia **Multimedia**, que incluye procesamiento de imágenes a nivel de píxel (clasificación de texturas e implementación de un filtro de suavizado) y producción multimedia (cover animado de "La Vaca Lola" versión rockera).
+Repositorio del trabajo individual de la materia **Multimedia**, que cubre tres actividades principales:
+- **Actividad A:** Clasificación de texturas por análisis de píxeles en espacio HSV
+- **Actividad B:** Filtro de suavizado 3×3 implementado manualmente (píxel a píxel)
+- **Actividad C:** Producción multimedia — cover animado en HD 720p de "La Vaca Lola" versión rockera con escenario, luces, guitarra y karaoke sincronizado
 
 ---
 
@@ -10,13 +13,19 @@ Repositorio del trabajo individual de la materia **Multimedia**, que incluye pro
 ```
 ProyectoMultimedia/
 ├── procesamiento/
-│   ├── a_clasificacion_texturas.py   ← Clasificar superficies por color/textura
+│   ├── a_clasificacion_texturas.py   ← Clasificar superficies por color/textura (HSV)
 │   ├── b_filtro_suavizado.py         ← Filtro de promedio 3×3 manual (píxel a píxel)
-│   └── c_vaca_lola_animacion.py      ← Cover multimedia "La Vaca Lola"
+│   └── c_vaca_lola_animacion.py      ← Cover HD 720p "La Vaca Lola" rockera
 ├── web/
-│   ├── index.html                    ← Plataforma web principal (GitHub Pages)
-│   ├── style.css                     ← Estilos modernos (dark mode)
-│   └── app.js                        ← Three.js + formularios dinámicos
+│   ├── index.html                    ← Plataforma web principal
+│   ├── style.css                     ← Estilos modernos (dark mode, glassmorphism)
+│   ├── app.js                        ← Canvas API + Three.js + lógica de actividades
+│   ├── mascara_texturas.jpg          ← Resultado demo Actividad A
+│   ├── resultado_suavizado.jpg       ← Resultado demo Actividad B
+│   ├── resultado_texturas.jpg        ← Resultado demo Actividad A (comparativa)
+│   └── modelo/GutierrezCondori_modelo.obj ← Modelo 3D
+├── generar_informe.py                ← Genera el informe Word técnico
+├── Informe_Tecnico_JonathanGutierrez.docx
 ├── requirements.txt
 └── README.md
 ```
@@ -91,11 +100,18 @@ Para cada píxel (x, y):
 ```
 Se compara el resultado contra `cv2.blur()` como referencia.
 
-### c) Cover "La Vaca Lola"
-Pipeline multimedia completo:
+### c) Cover "La Vaca Lola" 🐄🎸
+Pipeline multimedia completo de producción de videoclip rockero en **HD 720p**:
 1. Generación de audio con `edge-tts` (voz neural boliviana `es-BO-MarceloNeural`)
-2. Animación frame a frame con **OpenCV**: modelo 3D rotando con texto sincronizado
-3. Combinación de video + audio con **FFmpeg**
+2. Animación frame a frame con **OpenCV** (30 FPS, 1280×720):
+   - Escenario de rock: fondo oscuro, estructura de truss metálica, tablas en perspectiva
+   - 4 focos de luz animados con haces semitransparentes oscilantes (magenta, naranja, cyan, verde)
+   - Vaca rockera dibujada vectorialmente con manchas, ubre, cola con meneo animado
+   - Guitarra eléctrica roja de doble cuerno con animación de rasgueo sincronizado
+   - Collar de púas, mohawk punk negro, gafas de sol de aviador
+   - Karaoke sincronizado efecto máquina de escribir, notas musicales flotantes
+3. Combinación de video + audio con **FFmpeg** → H.264/AAC compatible HTML5
+4. Archivo final: `GutierrezCondori_vaca_lola_final.mp4`
 
 ---
 
@@ -122,6 +138,14 @@ La plataforma web incluye las tres actividades principales organizadas en una in
 | FFmpeg | Acoplamiento final de audio H.264 y video AAC para la web |
 | Three.js r128 | Animación interactiva de partículas verdes flotantes de fondo |
 | Canvas API | Procesamiento digital de imágenes directamente en el navegador |
+
+---
+
+## 🌐 Demo en Línea
+
+La plataforma web está publicada en **GitHub Pages** y puede visitarse directamente en el navegador sin instalación:
+
+> 🔗 [Ver plataforma multimedia en GitHub Pages](https://github.com/JonathanGutierrez1/ProyectoMultimedia)
 
 ---
 
