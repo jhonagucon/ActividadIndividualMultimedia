@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajo Individual — Multimedia · Jonathan Gutierrez Condori</title>
+  <meta name="description" content="Trabajo Individual de Multimedia: Clasificación de Texturas, Filtro de Suavizado y Cover La Vaca Lola. UMSA Informática 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══ CURSOR GLOW ══════════════════════════════════════════ -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ══ NAV ══════════════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <span class="brand-dot"></span>
+    <span class="brand-name">Multimedia <em>·</em> UMSA</span>
+  </div>
+  <div class="nav-links">
+    <a href="#texturas" class="nav-link"><span class="nav-num">A</span>Texturas</a>
+    <a href="#suavizado" class="nav-link"><span class="nav-num">B</span>Suavizado</a>
+    <a href="#vacalola" class="nav-link"><span class="nav-num">C</span>Vaca Lola</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://github.com" target="_blank" class="btn-github">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-glow-orb orb-1"></div>
+  <div class="hero-glow-orb orb-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Universidad Mayor de San Andrés · Carrera de Informática · 2026
+    </div>
+    <h1 class="hero-title">
+      <span class="hero-word word-1">Trabajo</span>
+      <span class="hero-word word-2">Individual</span>
+      <br>
+      <span class="hero-accent">Multimedia</span>
+    </h1>
+    <p class="hero-author">JONATHAN GUTIERREZ CONDORI</p>
+    <p class="hero-desc">
+      Procesamiento de imágenes a nivel de píxel · Producción audiovisual multimedia
+    </p>
+
+    <div class="hero-activities">
+      <div class="activity-pill">
+        <span class="pill-icon">🔍</span>
+        <span>Clasificación de Texturas</span>
+        <span class="pill-tag">HSV + Varianza</span>
+      </div>
+      <div class="activity-pill">
+        <span class="pill-icon">✨</span>
+        <span>Filtro de Suavizado</span>
+        <span class="pill-tag">3×3 Promedio</span>
+      </div>
+      <div class="activity-pill">
+        <span class="pill-icon">🎵</span>
+        <span>Cover La Vaca Lola</span>
+        <span class="pill-tag">TTS + FFmpeg</span>
+      </div>
+    </div>
+
+    <div class="hero-cta-row">
+      <a href="#texturas" class="btn-primary">Explorar Actividades ↓</a>
+      <a href="#vacalola" class="btn-secondary">Ver Video 🎬</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-canvas-label">Procesamiento Píxel a Píxel</div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN A: CLASIFICACIÓN DE TEXTURAS ══════════════════ -->
+<section id="texturas" class="section">
+  <div class="section-line"></div>
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <span class="eyebrow-letter">A</span>
+        <span class="eyebrow-text">Actividad A · Procesamiento de Imágenes</span>
+      </div>
+      <h2>Clasificación de Texturas</h2>
+      <p>Diferenciación de superficies (césped, tierra, cemento, asfalto) operando directamente sobre la matriz de píxeles con análisis HSV y varianza local.</p>
+    </div>
+
+    <!-- Panel principal -->
+    <div class="panel">
+      <div class="panel-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-label">📂 Imagen de entrada</span>
+          <button class="btn-upload" onclick="triggerUpload()">Subir imagen</button>
+          <input type="file" id="imageLoader" accept="image/*" style="display:none" onchange="handleImage(event)">
+        </div>
+        <div class="toolbar-center">
+          <span class="toolbar-label">Muestras rápidas:</span>
+          <div class="preset-group">
+            <button class="preset-btn active" id="presetPaisaje" onclick="cargarMuestra('paisaje')">🏞 Paisaje</button>
+            <button class="preset-btn" id="presetCesped" onclick="cargarMuestra('cesped')">🌿 Césped</button>
+            <button class="preset-btn" id="presetTierra" onclick="cargarMuestra('tierra')">🟤 Tierra</button>
+            <button class="preset-btn" id="presetCemento" onclick="cargarMuestra('cemento')">🩶 Cemento</button>
+            <button class="preset-btn" id="presetAsfalto" onclick="cargarMuestra('asfalto')">⬛ Asfalto</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-run" onclick="aplicarClasificacionTexturas()">
+          <span class="btn-run-icon">▶</span> Ejecutar Clasificación (HSV + Varianza)
+        </button>
+        <button class="btn-reset" onclick="restaurarOriginal()">↺ Restaurar</button>
+      </div>
+
+      <div class="canvas-duo">
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge input-badge">ENTRADA</span>
+            <span class="pane-title">Imagen Original</span>
+          </div>
+          <div class="canvas-frame" id="frameIn">
+            <canvas id="canvasIn"></canvas>
+            <div class="canvas-empty" id="emptyIn">Sube una imagen o selecciona una muestra rápida</div>
+          </div>
+        </div>
+        <div class="canvas-divider">
+          <div class="divider-arrow">→</div>
+          <div class="divider-label">Píxel<br>a Píxel</div>
+        </div>
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge output-badge">SALIDA</span>
+            <span class="pane-title">Mapa de Texturas</span>
+          </div>
+          <div class="canvas-frame" id="frameOut">
+            <canvas id="canvasOut"></canvas>
+            <div class="canvas-empty" id="emptyOut">Presiona ▶ para clasificar texturas</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN B: FILTRO DE SUAVIZADO ════════════════════════ -->
+<section id="suavizado" class="section section-alt">
+  <div class="section-line"></div>
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <span class="eyebrow-letter">B</span>
+        <span class="eyebrow-text">Actividad B · Filtro Espacial</span>
+      </div>
+      <h2>Filtro de Suavizado 3×3</h2>
+      <p>Filtro de promedio que recorre la imagen con ventana deslizante de 3×3 para reducir ruido y suavizar transiciones, implementado manualmente sobre la matriz de píxeles.</p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-toolbar">
+        <div class="toolbar-left">
+          <span class="toolbar-label">📂 Imagen de entrada</span>
+          <button class="btn-upload" onclick="triggerUploadSmooth()">Subir imagen</button>
+          <input type="file" id="imageLoaderSmooth" accept="image/*" style="display:none" onchange="handleImageSmooth(event)">
+        </div>
+        <div class="toolbar-center">
+          <span class="toolbar-label">Muestras rápidas:</span>
+          <div class="preset-group">
+            <button class="preset-btn" id="presetSmoothPaisaje" onclick="cargarMuestraSmooth('paisaje')">🏞 Paisaje</button>
+            <button class="preset-btn" id="presetSmoothCesped" onclick="cargarMuestraSmooth('cesped')">🌿 Césped</button>
+            <button class="preset-btn" id="presetSmoothTierra" onclick="cargarMuestraSmooth('tierra')">🟤 Tierra</button>
+            <button class="preset-btn" id="presetSmoothCemento" onclick="cargarMuestraSmooth('cemento')">🩶 Cemento</button>
+            <button class="preset-btn" id="presetSmoothAsfalto" onclick="cargarMuestraSmooth('asfalto')">⬛ Asfalto</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-run btn-smooth" onclick="aplicarFiltroPromedio()">
+          <span class="btn-run-icon">▶</span> Aplicar Filtro Promedio 3×3
+        </button>
+        <button class="btn-reset" onclick="restaurarOriginalSmooth()">↺ Restaurar</button>
+      </div>
+
+      <div class="canvas-duo">
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge input-badge">ANTES</span>
+            <span class="pane-title">Imagen Original</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="canvasInSmooth"></canvas>
+            <div class="canvas-empty" id="emptyInSmooth">Sube una imagen o selecciona una muestra rápida</div>
+          </div>
+        </div>
+        <div class="canvas-divider">
+          <div class="divider-arrow">→</div>
+          <div class="divider-label">Ventana<br>3×3</div>
+        </div>
+        <div class="canvas-pane">
+          <div class="pane-header">
+            <span class="pane-badge output-badge">DESPUÉS</span>
+            <span class="pane-title">Imagen Suavizada</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="canvasOutSmooth"></canvas>
+            <div class="canvas-empty" id="emptyOutSmooth">Presiona ▶ para aplicar filtro suavizado</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECCIÓN C: COVER "LA VACA LOLA" ═══════════════════════ -->
+<section id="vacalola" class="section">
+  <div class="section-line"></div>
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <span class="eyebrow-letter">C</span>
+        <span class="eyebrow-text">Actividad C · Producción Multimedia</span>
+      </div>
+      <h2>Cover de "La Vaca Lola"</h2>
+      <p>Producción multimedia de la canción infantil con síntesis de voz neural TTS sincronizada con animación de video. Audio y video fusionados con FFmpeg.</p>
+    </div>
+
+    <!-- Reproductor de video destacado -->
+    <div class="video-showcase">
+      <div class="video-showcase-inner">
+        <div class="video-label-bar">
+          <div class="video-label-left">
+            <span class="rec-dot"></span>
+            <span>Cover Multimedia · La Vaca Lola</span>
+          </div>
+          <div class="video-label-right">
+            <span class="tech-chip">edge-tts</span>
+            <span class="tech-chip">FFmpeg</span>
+            <span class="tech-chip">Python</span>
+          </div>
+        </div>
+        <div class="video-wrapper" id="videoWrapper">
+          <video id="mainVideo" class="main-video" controls playsinline preload="metadata">
+            <source src="vaca_lola_video.mp4" type="video/mp4">
+          </video>
+          <div class="video-error" id="videoError" style="display:none">
+            <div class="video-error-icon">🎬</div>
+            <p>El archivo <code>vaca_lola_video.mp4</code> no se encontró en la carpeta <code>web/</code>.</p>
+            <p>Cópialo desde la raíz del proyecto a la carpeta <code>web/</code>.</p>
+          </div>
+        </div>
+        <!-- Controles de audio personalizados -->
+        <div class="audio-controls" id="audioControls">
+          <button class="audio-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar" id="progressBar">
+              <div class="progress-fill" id="progressFill"></div>
+              <div class="progress-thumb" id="progressThumb"></div>
+            </div>
+          </div>
+          <div class="time-display">
+            <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+          </div>
+          <div class="volume-ctrl">
+            <span>🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" oninput="cambiarVolumen(this.value)">
+          </div>
+          <button class="audio-btn" onclick="toggleMute()" id="muteBtn">🔊</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="footer-dot"></span>
+        <strong>JONATHAN GUTIERREZ CONDORI</strong>
+      </div>
+      <p>Trabajo Individual · Multimedia · Universidad Mayor de San Andrés · 2026</p>
+      <div class="footer-tech">
+        <span>Python</span><span>OpenCV</span><span>NumPy</span>
+        <span>edge-tts</span><span>FFmpeg</span><span>Three.js</span><span>Canvas API</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
