@@ -25,7 +25,7 @@ ProyectoMultimedia/
 │   ├── resultado_texturas.jpg        ← Resultado demo Actividad A (comparativa)
 │   └── modelo/GutierrezCondori_modelo.obj ← Modelo 3D
 ├── generar_informe.py                ← Genera el informe Word técnico
-├── Informe_Tecnico_JonathanGutierrez.docx
+├── Informe_Individual_JonathanGutierrez.pdf
 ├── requirements.txt
 └── README.md
 ```
@@ -145,7 +145,7 @@ La plataforma web incluye las tres actividades principales organizadas en una in
 
 La plataforma web está publicada en **GitHub Pages** y puede visitarse directamente en el navegador sin instalación:
 
-> 🔗 [Ver plataforma multimedia en GitHub Pages](https://github.com/JonathanGutierrez1/ProyectoMultimedia)
+> 🔗 [Ver plataforma multimedia en GitHub Pages](https://jhonagucon.github.io/ActividadIndividualMultimedia/)
 
 ---
 
